@@ -3,6 +3,7 @@
 import { PerlinNoise3d } from "@divinestar/rng/perlin/index";
 import { BrushTool } from "@divinevoxel/foundation/Default/Tools/Brush/Brush";
 import { DataTool } from "@divinevoxel/foundation/Default/Tools/Data/DataTool";
+import { WorldGenBrush } from "@divinevoxel/foundation/Default/WorldGeneration/WorldGenBrush";
 const perlin = new PerlinNoise3d();
 perlin.noiseSeed(8908908090);
 
@@ -28,7 +29,7 @@ enum Biomes {
 
 const brush = new BrushTool();
 const dataTool = new DataTool();
-export class WorldGen {
+export class OverworldWorldGen {
   chunkDepth = 16;
   chunkWidth = 16;
   worldHeight = 60;
@@ -94,7 +95,7 @@ export class WorldGen {
     });
   }
 
-  generateWorldColumn(chunkX: number, chunkZ: number) {
+  generateWorldColumn(brush:WorldGenBrush, chunkX: number, chunkZ: number) {
     brush.start();
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
@@ -113,7 +114,7 @@ export class WorldGen {
     }
     brush.stop();
   }
-  fillWorldColumn(chunkX: number, chunkZ: number) {
+  fillWorldColumn( brush:WorldGenBrush,  chunkX: number, chunkZ: number) {
     brush.start();
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
@@ -135,7 +136,7 @@ export class WorldGen {
     }
     brush.stop();
   }
-  decorateWorldColumn(chunkX: number, chunkZ: number) {
+  decorateWorldColumn(  brush:WorldGenBrush, chunkX: number, chunkZ: number) {
     brush.start();
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {

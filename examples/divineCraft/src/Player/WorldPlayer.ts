@@ -43,4 +43,6 @@ export async function InitWorldPlayer(DVEW: DivineVoxelEngineWorld) {
   setInterval(() => {
     worlPlayer.update();
   }, 100);
+
+  return worlPlayer;
 }

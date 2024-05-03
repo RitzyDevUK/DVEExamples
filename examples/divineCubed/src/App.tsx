@@ -106,11 +106,12 @@ export function App() {
       nodes.engine = engine;
       nodes.core = core;
       nodes.sceneTool = sceneTool;
-      createPhysics(engine, scene, nodes);
+      await DVER.threads.world.runAsyncTasks("start-world", []);
+/*       createPhysics(engine, scene, nodes);
       await DVER.threads.world.runAsyncTasks("start-world", []);
       setTimeout(() => {
         createPlayer(engine, scene);
-      }, 2_000);
+      }, 2_000); */
     })();
   }, []);
 
