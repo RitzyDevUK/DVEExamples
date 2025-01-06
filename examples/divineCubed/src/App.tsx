@@ -5,9 +5,7 @@ import { Engine, Scene, UniversalCamera, Vector3 } from "@babylonjs/core";
 import { DivineVoxelEngineRender } from "@divinevoxel/core/Contexts/Render";
 import { textureData } from "Data/TextureData";
 import { SceneTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/SceneTool";
-import { InitRenderPlayer } from "Player/RenderPlayer";
 import { RenderNodes } from "Classes";
-import { createPhysics, createPlayer } from "test";
 const worldWorker = new Worker(new URL("./Contexts/World/", import.meta.url), {
   type: "module",
 });

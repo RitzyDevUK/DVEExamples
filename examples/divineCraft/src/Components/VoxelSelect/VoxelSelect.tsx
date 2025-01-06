@@ -1,12 +1,21 @@
+import { useRef, useEffect } from "react";
 import { voxelData } from "../../Data/VoxelData";
 import "./VoxelSelect.css";
 import { VoxelData } from "@divinevoxel/core";
 import { useState } from "react";
 import { PlayerState } from "../../Player/PlayerState";
 
-function Voxel({ data, active }: { data: VoxelData; active: boolean }) {
+function Voxel({
+  data,
+  active,
+  ref,
+}: {
+  data: VoxelData;
+  active: boolean;
+  ref?: React.RefObject<HTMLDivElement>;
+}) {
   return (
-    <div className={`voxel ${active ? "active" : ""}`}>
+    <div ref={ref} className={`voxel ${active ? "active" : ""}`}>
       <div className="voxel-image-container">
         <img
           className="voxel-image"
@@ -16,16 +25,31 @@ function Voxel({ data, active }: { data: VoxelData; active: boolean }) {
     </div>
   );
 }
+
 export function VoxelSelect() {
   const [activeVoxel, setActiveVoxel] = useState(PlayerState.selectedVoxel);
-  PlayerState.observers.voxelSelectUpdated.subscribe(VoxelSelect, () =>
-    setActiveVoxel(PlayerState.selectedVoxel)
-  );
+  const containerRef = useRef<HTMLDivElement|null>(null);
+
+  PlayerState.observers.voxelSelectUpdated.subscribe(VoxelSelect, () => {
+    setActiveVoxel(PlayerState.selectedVoxel);
+    const activeElement = containerRef.current?.querySelector(".active");
+    activeElement?.scrollIntoView({ inline: "center" });
+  });
+
   return (
-    <div className="voxel-select">
+    <div ref={containerRef} className="voxel-select">
       <div className="voxel-select-row">
-        {voxelData.map((_) => (
-          <Voxel active={activeVoxel.id == _.id} data={_} />
+        {voxelData.map((_, index) => (
+          <Voxel
+            key={_.id}
+            active={activeVoxel.id == _.id}
+            data={_}
+            ref={
+              index === voxelData.findIndex((v) => v.id === activeVoxel.id)
+                ? containerRef
+                : undefined
+            }
+          />
         ))}
       </div>
     </div>

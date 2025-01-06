@@ -3,10 +3,10 @@ import {
   PlayerPhysicsData,
   PlayerStatsData,
 } from "../Data/index";
-import { CreatePromiseCheck } from "@divinestar/utils/Intervals/CreatePromiseCheck";
-import { ThreadComm } from "@divinestar/threads";
+import { CreatePromiseCheck } from "@amodx/core/Intervals/CreatePromiseCheck";
+import { Threads } from "@amodx/threads";
 
-export async function SetUpPlayerData(TC: typeof ThreadComm) {
+export async function SetUpPlayerData(TC: typeof Threads) {
   let playerDataReady = false;
   TC.registerTasks("connect-player-tags", (data: any[]) => {
     PlayerManager.physics = new PlayerPhysicsData(data[0], data[1]);

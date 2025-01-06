@@ -1,6 +1,6 @@
-import type { TagManagerBase } from "@divinestar/binary/";
-import type { RemoteTagManagerInitData } from "@divinestar/binary/";
-import { RemoteTagManager } from "@divinestar/binary/";
+import type { BinraryStructBase } from "@amodx/binary/";
+import type { RemoteBinaryStructData } from "@amodx/binary/";
+import { RemoteBinaryStruct } from "@amodx/binary/";
 
 export const PlayerPhysicsStatesValues = {
   still: 0,
@@ -30,11 +30,11 @@ export const PlayerPhysicsTagIDs = {
   },
 };
 
-export const PlayerPhysicsTags = new RemoteTagManager("player-physics-tags");
+export const PlayerPhysicsTags = new RemoteBinaryStruct("player-physics-tags");
 
 class DBTVec3 {
-  parent: { tags: TagManagerBase };
-  constructor(public tagId: string, parent?: { tags: TagManagerBase }) {
+  parent: { tags: BinraryStructBase };
+  constructor(public tagId: string, parent?: { tags: BinraryStructBase }) {
     if (parent) {
       this.parent = parent;
     }
@@ -45,22 +45,22 @@ class DBTVec3 {
     this.z = z;
   }
   get x() {
-    return this.parent.tags.getArrayTagValue(this.tagId, 0);
+    return this.parent.tags.getArrayPropertyValue(this.tagId, 0);
   }
   set x(v: number) {
-    this.parent.tags.setArrayTagValue(this.tagId, 0, v);
+    this.parent.tags.setArrayPropertyValue(this.tagId, 0, v);
   }
   get y() {
-    return this.parent.tags.getArrayTagValue(this.tagId, 1);
+    return this.parent.tags.getArrayPropertyValue(this.tagId, 1);
   }
   set y(v: number) {
-    this.parent.tags.setArrayTagValue(this.tagId, 1, v);
+    this.parent.tags.setArrayPropertyValue(this.tagId, 1, v);
   }
   get z() {
-    return this.parent.tags.getArrayTagValue(this.tagId, 2);
+    return this.parent.tags.getArrayPropertyValue(this.tagId, 2);
   }
   set z(v: number) {
-    this.parent.tags.setArrayTagValue(this.tagId, 2, v);
+    this.parent.tags.setArrayPropertyValue(this.tagId, 2, v);
   }
 
   getAsArray(): [x: number, y: number, z: number] {
@@ -69,10 +69,10 @@ class DBTVec3 {
 }
 
 export class PlayerPhysicsData {
-  tags: RemoteTagManager;
-  constructor(buffer: SharedArrayBuffer, initData: RemoteTagManagerInitData) {
-    this.tags = new RemoteTagManager("player-physics-tags");
-    this.tags.$INIT(initData);
+  tags: RemoteBinaryStruct;
+  constructor(buffer: SharedArrayBuffer, initData: RemoteBinaryStructData) {
+    this.tags = new RemoteBinaryStruct("player-physics-tags");
+    this.tags.init(initData);
     this.tags.setBuffer(buffer);
     this.pick._s = this;
     this.states._s = this;
@@ -105,50 +105,50 @@ export class PlayerPhysicsData {
   states = {
     _s: <PlayerPhysicsData>{},
     get movement() {
-      return this._s.tags.getTag(PlayerPhysicsTagIDs.states.movement);
+      return this._s.tags.getProperty(PlayerPhysicsTagIDs.states.movement);
     },
     set movement(v: number) {
-      this._s.tags.setTag(PlayerPhysicsTagIDs.states.movement, v);
+      this._s.tags.setProperty(PlayerPhysicsTagIDs.states.movement, v);
     },
     get secondaryMovement() {
-      return this._s.tags.getTag(PlayerPhysicsTagIDs.states.secondaryMovement);
+      return this._s.tags.getProperty(PlayerPhysicsTagIDs.states.secondaryMovement);
     },
     set secondaryMovement(v: number) {
-      this._s.tags.setTag(PlayerPhysicsTagIDs.states.secondaryMovement, v);
+      this._s.tags.setProperty(PlayerPhysicsTagIDs.states.secondaryMovement, v);
     },
     get jumping() {
-      return this._s.tags.getTag(PlayerPhysicsTagIDs.states.jumping);
+      return this._s.tags.getProperty(PlayerPhysicsTagIDs.states.jumping);
     },
     set jumping(v: number) {
-      this._s.tags.setTag(PlayerPhysicsTagIDs.states.jumping, v);
+      this._s.tags.setProperty(PlayerPhysicsTagIDs.states.jumping, v);
     },
     get running() {
-      return this._s.tags.getTag(PlayerPhysicsTagIDs.states.running);
+      return this._s.tags.getProperty(PlayerPhysicsTagIDs.states.running);
     },
     set running(v: number) {
-      this._s.tags.setTag(PlayerPhysicsTagIDs.states.running, v);
+      this._s.tags.setProperty(PlayerPhysicsTagIDs.states.running, v);
     },
     get onGround() {
-      return this._s.tags.getTag(PlayerPhysicsTagIDs.states.onGround) == 1;
+      return this._s.tags.getProperty(PlayerPhysicsTagIDs.states.onGround) == 1;
     },
     set onGround(v: boolean) {
-      this._s.tags.setTag(PlayerPhysicsTagIDs.states.onGround, v ? 1 : 0);
+      this._s.tags.setProperty(PlayerPhysicsTagIDs.states.onGround, v ? 1 : 0);
     },
     get inWater() {
-      return this._s.tags.getTag(PlayerPhysicsTagIDs.states.inWater) == 1;
+      return this._s.tags.getProperty(PlayerPhysicsTagIDs.states.inWater) == 1;
     },
     set inWater(v: boolean) {
-      this._s.tags.setTag(PlayerPhysicsTagIDs.states.inWater, v ? 1 : 0);
+      this._s.tags.setProperty(PlayerPhysicsTagIDs.states.inWater, v ? 1 : 0);
     },
   };
   get eyeLevel() {
-    return this.tags.getTag(PlayerPhysicsTagIDs.eyeLevel) / 10;
+    return this.tags.getProperty(PlayerPhysicsTagIDs.eyeLevel) / 10;
   }
   set eyeLevel(v: number) {
     if (!Number.isInteger(v)) {
       v = (v * 10) >> 0;
     }
-    this.tags.setTag(PlayerPhysicsTagIDs.eyeLevel, v);
+    this.tags.setProperty(PlayerPhysicsTagIDs.eyeLevel, v);
   }
 
   nowIs = {

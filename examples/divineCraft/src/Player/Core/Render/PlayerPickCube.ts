@@ -13,11 +13,7 @@ export class PlayerPickCube {
   cube: Mesh;
   cameraPickPostion: Vector3;
   setPickNormals() {
-    const position = new Vector3(
-      this.player.model.model.position.x,
-      this.player.model.model.position.y + PlayerManager.physics.eyeLevel,
-      this.player.model.model.position.z
-    );
+    const position = this.player.nodes.camera.globalPosition;
     const camPick = this.player.nodes.scene.pickWithRay(
       new Ray(position, this.cube.position.subtract(position).normalize(), 30)
     );

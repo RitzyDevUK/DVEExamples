@@ -5,6 +5,7 @@ import { Scene } from "@babylonjs/core/scene";
 import { Engine } from "@babylonjs/core/Engines/engine";
 
 import { SceneTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/SceneTool";
+import { RenderPlayer } from "Player/Core/Render";
 
 export class RenderNodes {
   scene: Scene;
@@ -14,4 +15,5 @@ export class RenderNodes {
   sceneTool: SceneTool;
   core: DVEFBRCore;
   DVER: DivineVoxelEngineRender;
+  player:RenderPlayer
 }

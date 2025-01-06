@@ -5,25 +5,36 @@
   overflow-x: hidden;
   justify-content: center;
   margin: auto;
-
-  height: 75px;
+  overflow: hidden;
+  height: 80px;
   position: absolute;
+  left: 0;
+
   bottom: 0;
   width: 100%;
-
+  z-index: 100;
 
   .voxel-select-row {
     transition: 0.15s;
     display: flex;
-   
+    width: 600px;
+    left: 0;
+
+    bottom: 0;
 
     flex-direction: row;
-    justify-content: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    border: 3px solid rgba(0, 0, 0, 0.7);
     background-color: gray;
     .voxel {
       display: flex;
       flex-direction: row;
       justify-content: center;
+      flex: 0 0 auto;
+      cursor: pointer;
       background-color: rgba(0, 0, 0, 0.7);
       padding: 5px;
       &.active {
@@ -42,7 +53,10 @@
       .voxel-title {
         width: 100%;
       }
-
     }
   }
+}
+
+.voxel-select-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }

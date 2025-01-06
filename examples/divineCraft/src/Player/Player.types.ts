@@ -1,4 +1,4 @@
-import { Vec3Array } from "@divinevoxel/core/Math";
+import { Vec3Array } from "@amodx/math";
 import { AddVoxelData } from "@divinevoxel/foundation/Data/Types/WorldData.types";
 
 export enum PlayerTasks {

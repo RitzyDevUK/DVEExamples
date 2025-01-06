@@ -20,7 +20,7 @@ export async function InitRenderPlayer(
   const { camera, scene, core } = nodes;
   PlayerManager.physics.eyeLevel = 0.7;
 
-  camera.position.y =  PlayerManager.physics.eyeLevel;
+  camera.position.y = PlayerManager.physics.eyeLevel;
   playerModel.isVisible = false;
   //move camera to player's eye level
   //camera.position.y = PlayerManager.physics.eyeLevel;
@@ -42,7 +42,7 @@ export async function InitRenderPlayer(
   });
 
   console.log("set up core FO", core, core.renderer);
-/*   core.renderer.foManager.setOriginCenter(scene as any, {
+  /*   core.renderer.foManager.setOriginCenter(scene as any, {
     position: oriign as any,
   });
  */
@@ -57,4 +57,5 @@ export async function InitRenderPlayer(
 
   renderPlayer.active = true;
   SetUpControls(DVER, renderPlayer);
+  return renderPlayer;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import InitDVErenderer from "@divinevoxel/babylon-renderer/Defaults/Foundation/Classic/InitDVEBRClassic";
 import { DVEFBRCore } from "@divinevoxel/babylon-renderer/Defaults/Foundation/DVEFBRCore";
 import {
@@ -16,6 +16,8 @@ import { SceneTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Too
 import { InitRenderPlayer } from "Player/RenderPlayer";
 import { RenderNodes } from "Classes";
 import { VoxelSelect } from "Components/VoxelSelect/VoxelSelect";
+import { WorldMapComponent } from "Map/WorldMapComponent";
+
 const worldWorker = new Worker(new URL("./Contexts/World/", import.meta.url), {
   type: "module",
 });
@@ -25,7 +27,7 @@ const nexusWorker = new Worker(new URL("./Contexts/Nexus", import.meta.url), {
 });
 
 const constructorWorkers: Worker[] = [];
-for (let i = 0; i < navigator.hardwareConcurrency - 1; i++) {
+for (let i = 0; i < navigator.hardwareConcurrency - 3; i++) {
   constructorWorkers.push(
     new Worker(new URL("./Contexts/Constructor/", import.meta.url), {
       type: "module",
@@ -34,6 +36,14 @@ for (let i = 0; i < navigator.hardwareConcurrency - 1; i++) {
 }
 export function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [nodes, setNodes] = useState<RenderNodes | null>(null);
+
+  const noWorldGen = useMemo(() => {
+    const urlObj = new URL(window.location.href);
+    const params = new URLSearchParams(urlObj.search);
+    return params.has("no-world-gen");
+  }, [window.location.href]);
+
   useEffect(() => {
     (async () => {
       if (!canvasRef.current) return;
@@ -52,7 +62,7 @@ export function App() {
         dirty = true;
       });
 
-      window.addEventListener("click", () => {
+      canvasRef.current.addEventListener("click", () => {
         canvas.requestPointerLock();
       });
       const scene = new Scene(engine);
@@ -107,7 +117,11 @@ export function App() {
       sceneTool.options.doRGB(true);
       sceneTool.levels.setSun(0.8);
       sceneTool.levels.setBase(0.01);
-      DVER.threads.world.runTasks("start-world", []);
+      if (noWorldGen) {
+        DVER.threads.world.runTasks("start-world-test", []);
+      } else {
+        DVER.threads.world.runTasks("start-world", []);
+      }
 
       nodes.camera = camera;
       nodes.scene = scene;
@@ -115,7 +129,10 @@ export function App() {
       nodes.engine = engine;
       nodes.core = core;
       nodes.sceneTool = sceneTool;
-      await InitRenderPlayer(DVER, nodes);
+      (window as any).nodes = nodes;
+      setNodes(nodes);
+      const player = await InitRenderPlayer(DVER, nodes);
+      nodes.player = player;
     })();
   }, []);
 
@@ -124,11 +141,20 @@ export function App() {
       style={{
         width: "100%",
         height: "100%",
-        position:"relative"
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      {nodes && <WorldMapComponent nodes={nodes} />}
       <VoxelSelect />
-      <canvas ref={canvasRef}></canvas>
+      <canvas
+        style={{
+          width: "100%",
+          height: "100%",
+          touchAction: "none",
+        }}
+        ref={canvasRef}
+      ></canvas>
     </div>
   );
 }

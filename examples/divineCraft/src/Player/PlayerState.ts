@@ -1,4 +1,4 @@
-import { Observable } from "@divinestar/utils/Observers/Observable";
+import { Observable } from "@amodx/core/Observers/Observable";
 import { AddVoxelData } from "@divinevoxel/foundation/Data/Types/WorldData.types";
 import { voxelData } from "Data/VoxelData";
 

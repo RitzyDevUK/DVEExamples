@@ -42,11 +42,16 @@ export async function InitNexusPlayer(DVEN: DivineVoxelEngineNexus) {
     PlayerManager.stats
   );
 
-
-
+/* 
+  setInterval(()=>{
+    console.log("player at",nexusPlayer.node.position)
+  },5_000)
+ */
   setTimeout(() => {
     nexusPlayer.node.setPosition(0,100,0)
+
     setInterval(() => {
+    
       nexusPlayer.update();
     }, 10);
   }, 1_000);

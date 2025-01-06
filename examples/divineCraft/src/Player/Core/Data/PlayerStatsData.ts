@@ -1,6 +1,6 @@
-import { RemoteTagManager, RemoteTagManagerInitData } from "@divinestar/binary";
+import { RemoteBinaryStruct, RemoteBinaryStructData } from "@amodx/binary";
 
-export const PlayerStatsTags = new RemoteTagManager("player-stats-tags");
+export const PlayerStatsTags = new RemoteBinaryStruct("player-stats-tags");
 
 export const PlayerStatsTagIDs = {
   header: "#header",
@@ -16,72 +16,72 @@ export const PlayerStatsTagIDs = {
 };
 
 export class PlayerStatsData {
-  tags = new RemoteTagManager("player-stairs-data");
-  constructor(sab: SharedArrayBuffer, initData: RemoteTagManagerInitData) {
-    this.tags.$INIT(initData);
+  tags = new RemoteBinaryStruct("player-stairs-data");
+  constructor(sab: SharedArrayBuffer, initData: RemoteBinaryStructData) {
+    this.tags.init(initData);
     this.tags.setBuffer(sab);
   }
 
   get level() {
-    return this.tags.getTag(PlayerStatsTagIDs.level);
+    return this.tags.getProperty(PlayerStatsTagIDs.level);
   }
   set level(level: number) {
-    this.tags.setTag(PlayerStatsTagIDs.level, level);
+    this.tags.setProperty(PlayerStatsTagIDs.level, level);
   }
 
   get exp() {
-    return this.tags.getTag(PlayerStatsTagIDs.exp);
+    return this.tags.getProperty(PlayerStatsTagIDs.exp);
   }
   set exp(exp: number) {
-    this.tags.setTag(PlayerStatsTagIDs.exp, exp);
+    this.tags.setProperty(PlayerStatsTagIDs.exp, exp);
   }
 
   get maxMana() {
-    return this.tags.getTag(PlayerStatsTagIDs.maxMana);
+    return this.tags.getProperty(PlayerStatsTagIDs.maxMana);
   }
   set maxMana(maxMana: number) {
-    this.tags.setTag(PlayerStatsTagIDs.maxMana, maxMana);
+    this.tags.setProperty(PlayerStatsTagIDs.maxMana, maxMana);
   }
 
   get currentMana() {
-    return this.tags.getTag(PlayerStatsTagIDs.currentMana);
+    return this.tags.getProperty(PlayerStatsTagIDs.currentMana);
   }
   set currentMana(currentMana: number) {
-    this.tags.setTag(PlayerStatsTagIDs.currentMana, currentMana);
+    this.tags.setProperty(PlayerStatsTagIDs.currentMana, currentMana);
   }
 
   get maxEnegery() {
-    return this.tags.getTag(PlayerStatsTagIDs.maxEnegery);
+    return this.tags.getProperty(PlayerStatsTagIDs.maxEnegery);
   }
   set maxEnegery(maxEnegery: number) {
-    this.tags.setTag(PlayerStatsTagIDs.maxEnegery, maxEnegery);
+    this.tags.setProperty(PlayerStatsTagIDs.maxEnegery, maxEnegery);
   }
 
   get currentEnergy() {
-    return this.tags.getTag(PlayerStatsTagIDs.currentEnergy);
+    return this.tags.getProperty(PlayerStatsTagIDs.currentEnergy);
   }
   set currentEnergy(currentEnergy: number) {
-    this.tags.setTag(PlayerStatsTagIDs.currentEnergy, currentEnergy);
+    this.tags.setProperty(PlayerStatsTagIDs.currentEnergy, currentEnergy);
   }
 
   get speed() {
-    return this.tags.getTag(PlayerStatsTagIDs.speed);
+    return this.tags.getProperty(PlayerStatsTagIDs.speed);
   }
   set speed(speed: number) {
-    this.tags.setTag(PlayerStatsTagIDs.speed, speed);
+    this.tags.setProperty(PlayerStatsTagIDs.speed, speed);
   }
 
   get jumpPower() {
-    return this.tags.getTag(PlayerStatsTagIDs.jumpPower);
+    return this.tags.getProperty(PlayerStatsTagIDs.jumpPower);
   }
   set jumpPower(jumpPower: number) {
-    this.tags.setTag(PlayerStatsTagIDs.jumpPower, jumpPower);
+    this.tags.setProperty(PlayerStatsTagIDs.jumpPower, jumpPower);
   }
 
   get intuition() {
-    return this.tags.getTag(PlayerStatsTagIDs.intuition);
+    return this.tags.getProperty(PlayerStatsTagIDs.intuition);
   }
   set intuition(intuition: number) {
-    this.tags.setTag(PlayerStatsTagIDs.intuition, intuition);
+    this.tags.setProperty(PlayerStatsTagIDs.intuition, intuition);
   }
 }

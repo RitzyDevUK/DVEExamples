@@ -1,6 +1,6 @@
 
 
-import { PerlinNoise3d } from "@divinestar/rng/perlin/index";
+import { PerlinNoise3d } from "@amodx/rng/perlin/index";
 import { BrushTool } from "@divinevoxel/foundation/Default/Tools/Brush/Brush";
 import { DataTool } from "@divinevoxel/foundation/Default/Tools/Data/DataTool";
 const perlin = new PerlinNoise3d();

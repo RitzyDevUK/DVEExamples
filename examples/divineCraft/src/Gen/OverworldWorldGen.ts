@@ -1,12 +1,11 @@
-
-
-import { PerlinNoise3d } from "@divinestar/rng/perlin/index";
+import { PerlinNoise3d } from "@amodx/rng/perlin/index";
 import { BrushTool } from "@divinevoxel/foundation/Default/Tools/Brush/Brush";
 import { DataTool } from "@divinevoxel/foundation/Default/Tools/Data/DataTool";
 import { WorldGenBrush } from "@divinevoxel/foundation/Default/WorldGeneration/WorldGenBrush";
-const perlin = new PerlinNoise3d();
-perlin.noiseSeed(8908908090);
-
+const worldPerlin = new PerlinNoise3d();
+worldPerlin.noiseSeed(8908908090);
+const detailPerlin = new PerlinNoise3d();
+detailPerlin.noiseSeed(23904829482038429);
 const biomePerlin = new PerlinNoise3d();
 biomePerlin.noiseSeed(203948239);
 
@@ -25,6 +24,8 @@ enum Biomes {
   Ocean,
   Beach,
   Grassland,
+  Forest,
+  Desert,
 }
 
 const brush = new BrushTool();
@@ -32,8 +33,8 @@ const dataTool = new DataTool();
 export class OverworldWorldGen {
   chunkDepth = 16;
   chunkWidth = 16;
-  worldHeight = 60;
-  waterHeight = 30;
+  worldHeight = 120;
+  waterHeight = 60;
 
   getBiome(x: number, z: number): Biomes {
     const [xOffSet, yOffset, zOffSet] = [1000, 100, 10000];
@@ -43,28 +44,66 @@ export class OverworldWorldGen {
       0,
       (z + zOffSet) / scale
     );
+    if (value > 0.8) return Biomes.Desert;
     if (value > 0.6) return Biomes.Ocean;
     if (value <= 0.6 && value >= 0.55) return Biomes.Beach;
+    if (value <= 0.55 && value >= 0.35) return Biomes.Grassland;
+    if (value <= 0.35 && value >= 0.15) return Biomes.Forest;
     return Biomes.Grassland;
   }
 
   inNoiseRange(x: number, y: number, z: number) {
-    const p1 = perlin;
-    const [xOffSet, yOffset, zOffSet] = [1000, 100, 10000];
-    const scale = 30;
-    let height = p1.get((x + xOffSet) / scale, 0, (z + zOffSet) / scale) * 0.5;
-    let detail =
-      p1.get((x - xOffSet) / 15, (y + yOffset) / 15, (z - zOffSet) / 15) * 0.5;
-    let r = height + detail;
-    let elevation = y / 140;
-    return r > 0.3 + elevation && r < 0.4 + elevation;
+    const [xOffSet, yOffset, zOffSet] = [1000, 0, 10000];
+
+    let detail = detailPerlin.get(
+      (x - xOffSet) / 120,
+      y / 240,
+      (z - zOffSet) / 120
+    );
+    return !(detail > 0.7 && detail < 0.9);
   }
+  carveCave(x: number, y: number, z: number): boolean {
+    const terrainScale = 50;
+    const caveScale = 20;
+
+    const terrainNoise = worldPerlin.get(
+      x / terrainScale,
+      y / terrainScale,
+      z / terrainScale
+    );
+
+    const caveNoise = detailPerlin.get(
+      x / caveScale,
+      y / caveScale,
+      z / caveScale
+    );
+
+    const minCaveThreshold = 0.4;
+    const maxCaveThreshold = 0.6;
+    const minGradient = 0.2;
+    const maxGradient = 0.8;
+
+    const caveThreshold =
+      minCaveThreshold + (maxCaveThreshold - minCaveThreshold) * terrainNoise;
+
+    const gradient = minGradient + (maxGradient - minGradient) * terrainNoise;
+
+    const scale = 0.5;
+    const modifiedCaveThreshold = caveThreshold - scale * caveNoise;
+    const modifiedGradient = gradient + scale * caveNoise;
+
+    const shouldCarveCave =
+      caveNoise < modifiedCaveThreshold &&
+      y < modifiedGradient * this.worldHeight;
+
+    return shouldCarveCave;
+  }
+
   noiseHeight(x: number, z: number) {
-    const p1 = perlin;
     const [xOffSet, zOffSet] = [1000, 10000];
-    const scale = 30;
+    const scale = 240;
     let height =
-      p1.get((x + xOffSet) / scale, 0, (z + zOffSet) / scale) *
+      worldPerlin.get((x + xOffSet) / scale, 0, (z + zOffSet) / scale) *
       this.worldHeight;
     return height;
   }
@@ -95,51 +134,76 @@ export class OverworldWorldGen {
     });
   }
 
-  generateWorldColumn(brush:WorldGenBrush, chunkX: number, chunkZ: number) {
+  generateWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
+    brush.start();
+    for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
+      for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
+        const height = this.noiseHeight(x, z);
+        for (let y = 0; y < this.worldHeight; y++) {
+          if (y == 0 || y < height) {
+            brush.setId(voxels.stone).setXYZ(x, y, z).paint();
+            continue;
+          }
+        }
+      }
+    }
+    brush.stop();
+  }
+  carveWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
     brush.start();
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
         for (let y = 0; y < this.worldHeight; y++) {
           if (y == 0) {
-            brush.setId(voxels.stone).setXYZ(x, y, z).paint();
             continue;
           }
-          if (!this.inNoiseRange(x, y, z)) {
-            continue;
+          if (dataTool.loadInAt(x, y, z) && !dataTool.isRenderable()) continue;
+          if (this.carveCave(x, y, z)) {
+            const voxel = dataTool.getStringId();
+            if (voxel == voxels.water) continue;
+            brush.setXYZ(x, y, z).erase();
           }
-
-          brush.setId(voxels.stone).setXYZ(x, y, z).paint();
         }
       }
     }
     brush.stop();
   }
-  fillWorldColumn( brush:WorldGenBrush,  chunkX: number, chunkZ: number) {
+  fillWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
     brush.start();
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
-        let groundHeight = this.noiseHeight(x, z);
         const biomes = this.getBiome(x, z);
-        for (let y = 1; y < this.worldHeight; y++) {
-          if (dataTool.loadInAt(x, y, z) && dataTool.isRenderable()) continue;
-          if (y < this.waterHeight && biomes == Biomes.Ocean) {
-            brush.setId(voxels.water).setXYZ(x, y, z).paint();
-          }
-          if (
-            (y < this.waterHeight || y < groundHeight) &&
-            biomes == Biomes.Beach
-          ) {
-            brush.setId(voxels.sand).setXYZ(x, y, z).paint();
+        for (let y = this.waterHeight + 1; y > 0; y--) {
+          if (dataTool.loadInAt(x, y, z) && dataTool.isRenderable()) {
+            let i = y;
+            while (i <= this.waterHeight) {
+              if (y < this.waterHeight && biomes == Biomes.Ocean) {
+                brush.setId(voxels.water).setXYZ(x, y, z).paint();
+              }
+              if (y < this.waterHeight && biomes == Biomes.Beach) {
+                brush.setId(voxels.sand).setXYZ(x, y, z).paint();
+              }
+              i++;
+            }
+            break;
+          } else {
+            if (y < this.waterHeight && biomes == Biomes.Ocean) {
+              brush.setId(voxels.water).setXYZ(x, y, z).paint();
+            }
+            if (y < this.waterHeight && biomes == Biomes.Beach) {
+              brush.setId(voxels.sand).setXYZ(x, y, z).paint();
+            }
           }
         }
       }
     }
     brush.stop();
   }
-  decorateWorldColumn(  brush:WorldGenBrush, chunkX: number, chunkZ: number) {
+  addTopLayersToColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
     brush.start();
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
+        const biomes = this.getBiome(x, z);
         for (let y = 1; y < this.worldHeight; y++) {
           dataTool.loadInAt(x, y + 1, z);
 
@@ -147,17 +211,69 @@ export class OverworldWorldGen {
           dataTool.loadInAt(x, y, z);
           const voxel = dataTool.getStringId();
 
-          if (topAir && voxel == voxels.stone) {
-            brush.setId(voxels.grassBlock).setXYZ(x, y, z).paint();
-            let i = 5;
-            while (i--) {
-              brush
-                .setId(voxels.dirt)
-                .setXYZ(x, y - 1 - i, z)
-                .paint();
+          if (
+            biomes == Biomes.Grassland ||
+            biomes == Biomes.Ocean ||
+            biomes == Biomes.Beach ||
+            biomes == Biomes.Forest
+          ) {
+            if (topAir && voxel == voxels.stone) {
+              brush.setId(voxels.grassBlock).setXYZ(x, y, z).paint();
+              let i = 5;
+              while (i--) {
+                brush
+                  .setId(voxels.dirt)
+                  .setXYZ(x, y - 1 - i, z)
+                  .paint();
+              }
             }
-            if (Math.random() > 0.99) {
-              this.generateTree(x, y + 1, z);
+          }
+          if (biomes == Biomes.Desert) {
+            if (topAir && voxel == voxels.stone) {
+              brush.setId(voxels.sand).setXYZ(x, y, z).paint();
+              let i = 5;
+              while (i--) {
+                brush
+                  .setId(voxels.sand)
+                  .setXYZ(x, y - 1 - i, z)
+                  .paint();
+              }
+            }
+          }
+        }
+      }
+    }
+    brush.stop();
+  }
+  decorateWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
+    brush.start();
+    for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
+      for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
+        const biomes = this.getBiome(x, z);
+        for (let y = 1; y < this.worldHeight; y++) {
+          dataTool.loadInAt(x, y + 1, z);
+
+          const topAir = dataTool.isAir();
+          dataTool.loadInAt(x, y, z);
+          const voxel = dataTool.getStringId();
+
+          if (
+            biomes == Biomes.Grassland ||
+            biomes == Biomes.Ocean ||
+            biomes == Biomes.Beach ||
+            biomes == Biomes.Forest
+          ) {
+            if (topAir && voxel == voxels.grassBlock) {
+              if (Math.random() > (biomes == Biomes.Forest ? 0.9 : 0.99)) {
+                this.generateTree(x, y + 1, z);
+              }
+            }
+          }
+          if (biomes == Biomes.Desert) {
+            if (topAir && voxel == voxels.grassBlock) {
+              if (Math.random() > 0.999) {
+                this.generateTree(x, y + 1, z);
+              }
             }
           }
         }

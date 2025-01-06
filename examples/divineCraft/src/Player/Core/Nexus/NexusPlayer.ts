@@ -26,8 +26,8 @@ export class NexusPlayer extends EntityBase {
   materialStandingOn = "none";
   sideDirection = new Vector3(0, 0, 0);
   forwardDirection = new Vector3(0, 0, 0);
-  speed = 0.04;
-  runSpeed = 0.03;
+  speed = 0.03;
+  runSpeed = 0.02;
 
   tweens = {
     jump: new ValueEaseAndTween({
@@ -98,7 +98,7 @@ export class NexusPlayer extends EntityBase {
   
       if (collisionNode.results.faceHit.top() && collider.isSolid) {
         this.states.onGround = true;
-        this.materialStandingOn = dataTool.getMaterial();
+        this.materialStandingOn = dataTool.getMaterial()!;
       }
 
       if (
@@ -242,7 +242,7 @@ export class NexusPlayer extends EntityBase {
     this.states.climbing = false;
     for (const [x, y, z] of this.node.probe.voxels.queryWithNode(this.node)) {
       if (this.node.dataTool.loadInAt(x >> 0, y >> 0, z >> 0)) {
-        if (this.node.dataTool.getSubstance() == "#dve_liquid") {
+        if (this.node.dataTool.getSubstnaceData().isLiquid()) {
           this.states.inWater = true;
         }
         const collider = this.node.dataTool.getColliderObj();

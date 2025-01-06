@@ -1,137 +1,137 @@
-import { TagManager } from "@divinestar/binary/";
+import { BinaryNumberTypes, BinaryStruct } from "@amodx/binary/";
 import { PlayerPhysicsTagIDs } from "./PlayerPhysicsData";
 import { PlayerStatsTagIDs } from "./PlayerStatsData";
 
 export function RegisterPlayerData() {
-  const playerPhysicsTagManager = new TagManager("player-physics-tags");
-  playerPhysicsTagManager.registerTag({
+  const playerPhysicsTagManager = new BinaryStruct("player-physics-tags");
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.header,
     type: "header",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.position,
     type: "typed-number-array",
-    numberType: "64f",
+    numberType: BinaryNumberTypes.Float64,
     length: 3,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.pickPosition,
     type: "typed-number-array",
-    numberType: "64f",
+    numberType: BinaryNumberTypes.Float64,
     length: 3,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.pickNormals,
     type: "typed-number-array",
-    numberType: "8i",
+    numberType: BinaryNumberTypes.Int8,
     length: 3,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.rotation,
     type: "typed-number-array",
-    numberType: "32f",
+    numberType: BinaryNumberTypes.Float32,
     length: 3,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.direction,
     type: "typed-number-array",
-    numberType: "32f",
+    numberType: BinaryNumberTypes.Float32,
     length: 3,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.sideDirection,
     type: "typed-number-array",
-    numberType: "32f",
+    numberType: BinaryNumberTypes.Float32,
     length: 3,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.eyeLevel,
     type: "typed-number",
-    numberType: "8ui",
+    numberType: BinaryNumberTypes.Uint8,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.states.movement,
     type: "typed-number",
-    numberType: "8ui",
+    numberType: BinaryNumberTypes.Uint8,
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.states.secondaryMovement,
     type: "typed-number",
-    numberType: "8ui",
+    numberType: BinaryNumberTypes.Uint8,
   });
 
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.states.jumping,
     type: "boolean",
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.states.running,
     type: "boolean",
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.states.onGround,
     type: "boolean",
   });
-  playerPhysicsTagManager.registerTag({
+  playerPhysicsTagManager.registerProperty({
     id: PlayerPhysicsTagIDs.states.inWater,
     type: "boolean",
   });
-  playerPhysicsTagManager.$INIT({ indexBufferMode: "shared" });
+  playerPhysicsTagManager.init({ indexBufferMode: "shared" });
 
-  const playerStatesTagManger = new TagManager("player-states-tags");
-  playerStatesTagManger.registerTag({
+  const playerStatesTagManger = new BinaryStruct("player-states-tags");
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.header,
     type: "header",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.level,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.exp,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.currentMana,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.maxMana,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.currentEnergy,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.maxEnegery,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.speed,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.jumpPower,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
-  playerStatesTagManger.registerTag({
+  playerStatesTagManger.registerProperty({
     id: PlayerStatsTagIDs.intuition,
     type: "typed-number",
-    numberType: "16ui",
+    numberType: BinaryNumberTypes.Uint16,
   });
 
-  playerStatesTagManger.$INIT({ indexBufferMode: "shared" });
+  playerStatesTagManger.init({ indexBufferMode: "shared" });
   return {
     playerPhysicsTagManager,
     playerStatesTagManger,
