@@ -1,6 +1,6 @@
-import { WorldGenBrush } from "@divinevoxel/foundation/Default/WorldGeneration/WorldGenBrush";
+import { WorldGenBrush } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGenBrush";
 import { NooiseLayers } from "./NoiseLayers";
-import { DataTool } from "@divinevoxel/foundation/Default/Tools/Data/DataTool";
+import { DataTool } from "@divinevoxel/vlox/Tools/Data/DataTool";
 
 export class GenNodes {
   chunkDepth = 16;

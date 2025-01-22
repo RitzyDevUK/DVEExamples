@@ -55,7 +55,7 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
     camera.attachControl(camera, true);
     camera.panningSensibility = 1;
     const light = new HemisphericLight("", new Vector3(0, 1, 0), scene);
-    light.specular.set(0,0,0);
+    light.specular.set(0, 0, 0);
     scene.activeCamera = camera;
 
     const material = new StandardMaterial("", scene);
@@ -103,7 +103,7 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
       generateDistanceLines.parent = follow;
       generateDistanceLines.renderingGroupId = 3;
     }
-/*     {
+    /*     {
       const generateLeadDistanceLines = CreateGreasedLine(
         "",
         {
@@ -178,7 +178,6 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
       const { width, height } =
         containerRef.current!.parentElement!.getBoundingClientRect();
       if (width != lastWidth || height != lastHeight) {
-  
         engine.setSize(width, height);
 
         lastWidth = width;
@@ -191,16 +190,14 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
     const startBeta = camera.beta;
     resized.observe(containerRef.current!);
     engine.runRenderLoop(() => {
-      if (!props.nodes.player?.model?.model) return;
-
       if (!renderState.current.isBig) {
-        follow.position.copyFrom(props.nodes.player.model.model.position);
-        fixedParent.position.copyFrom(props.nodes.player.model.model.position);
+        //     follow.position.copyFrom(props.nodes.player.model.model.position);
+        //    fixedParent.position.copyFrom(props.nodes.player.model.model.position);
 
         const direction = props.nodes.camera
           .getDirection(new Vector3(0, 0, 1))
           .normalize();
-   
+
         const normalized = new Vector3(direction.x, 0, direction.z).normalize();
 
         // Calculate rotation angle
@@ -219,7 +216,7 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
         camera.radius = 800;
 
         camera.setTarget(follow.position.clone());
-        
+
         camera.alpha = startAlpha;
         camera.beta = startBeta;
         camera.rotation.copyFrom(startRotation);
@@ -238,15 +235,15 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
     let mode = renderState.current.mode;
 
     const inte = new SafeInterval(() => {
-      if (!props.nodes.player?.model?.model) return;
+      mapRef.current.updateTiles(["main", 0, 0, 0]);
+      //   if (!props.nodes.player?.model?.model) return;
 
-      mapRef.current.updateTiles([
+      /*       mapRef.current.updateTiles([
         "main",
         props.nodes.player.model.model.position.x,
         props.nodes.player.model.model.position.y,
         props.nodes.player.model.model.position.z,
-      ]);
-    
+      ]); */
     }, 500);
     inte.start();
   }, []);

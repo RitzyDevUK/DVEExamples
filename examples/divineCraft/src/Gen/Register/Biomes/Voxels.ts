@@ -1,4 +1,4 @@
-import { AddVoxelData } from "@divinevoxel/foundation/Data/Types/WorldData.types";
+import { PaintVoxelData } from "@divinevoxel/vlox/Data/Types/WorldData.types";
 
 export enum Voxels {
   Snow = "dc_snow",
@@ -89,7 +89,7 @@ export enum Voxels {
   Obsidian = "dc_obsidan",
   SeaLantern = "dc_sea_lantern"
 }
-export const VoxelData: Record<Voxels, Partial<AddVoxelData>> = {
+export const VoxelData: Record<Voxels, Partial<PaintVoxelData>> = {
   [Voxels.Stone]: { id: Voxels.Stone },
   [Voxels.SeaLantern]: { id: Voxels.SeaLantern },
   [Voxels.Snow]: { id: Voxels.Snow },

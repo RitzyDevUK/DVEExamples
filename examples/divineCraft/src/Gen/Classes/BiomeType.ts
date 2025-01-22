@@ -47,7 +47,7 @@ export abstract class BiomeType {
     }
 
     if (!bestBiome || !bestRange)
-      return this.biomes.get(this.biomes.keys().next()!.value)!;
+      return this.biomes.get(this.biomes.keys().next()!.value!)!;
     const data = bestBiome.getData();
     if (!data.edgeBiomes.length || !data.edgeFactor) return bestBiome;
     {
@@ -130,7 +130,7 @@ export abstract class BiomeType {
     }
 
     if (!bestBiome || !bestRange)
-      return this.biomes.get(this.biomes.keys().next()!.value)!;
+      return this.biomes.get(this.biomes.keys().next()!.value!)!;
 
     return bestBiome;
   }

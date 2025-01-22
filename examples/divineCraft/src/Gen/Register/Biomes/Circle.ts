@@ -1,8 +1,7 @@
-
 import { Distance2D } from "@amodx/math";
-import { BrushTool } from "@divinevoxel/foundation/Default/Tools/Brush/Brush";
+import { BrushTool } from "@divinevoxel/vlox/Tools/Brush/Brush";
 export function GenerateCircle(
-  brush:BrushTool,
+  brush: BrushTool,
   voxel: string,
   sx: number,
   sy: number,
@@ -15,16 +14,19 @@ export function GenerateCircle(
   let rz = sz - radius;
 
   brush.setId(voxel);
-  const dataTool = brush._dt;
+  const dataTool = brush.dataCursor;
+
   for (let ix = rx; ix <= sx + radius; ix++) {
     for (let iz = rz; iz <= sz + radius; iz++) {
       if (skipCenter) {
         if (ix == sx && iz == sz) continue;
       }
+
       if (noDestory) {
-        if (dataTool.loadInAt(ix, sy, iz)) {
-          if (dataTool.isAir() && dataTool.getLevelState() == 1) continue;
-          if (dataTool.isRenderable()) continue;
+        const v = dataTool.getVoxel(ix, sy, iz);
+        if (v) {
+          if (v.isAir() && v.getLevelState() == 1) continue;
+          if (v.isRenderable()) continue;
         }
       }
       if (Distance2D(ix, sx, iz, sz) <= radius) {

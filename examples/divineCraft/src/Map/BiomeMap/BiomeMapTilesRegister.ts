@@ -1,6 +1,4 @@
-import type { LocationData } from "@divinevoxel/core/Math";
-import type { Mesh } from "@babylonjs/core";
-import { WorldSpaces } from "@divinevoxel/core/Data/World/WorldSpaces";
+import type { LocationData } from "@divinevoxel/vlox/Math";
 import { BiomeMapTile } from "./BiomeMapTile";
 import { BiomeMap } from "./BiomeMap";
 

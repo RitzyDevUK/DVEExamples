@@ -1,9 +1,8 @@
 import { useRef, useEffect } from "react";
 import { voxelData } from "../../Data/VoxelData";
 import "./VoxelSelect.css";
-import { VoxelData } from "@divinevoxel/core";
+import { VoxelData } from "@divinevoxel/vlox";
 import { useState } from "react";
-import { PlayerState } from "../../Player/PlayerState";
 
 function Voxel({
   data,
@@ -27,7 +26,7 @@ function Voxel({
 }
 
 export function VoxelSelect() {
-  const [activeVoxel, setActiveVoxel] = useState(PlayerState.selectedVoxel);
+/*   const [activeVoxel, setActiveVoxel] = useState(PlayerState.selectedVoxel);
   const containerRef = useRef<HTMLDivElement|null>(null);
 
   PlayerState.observers.voxelSelectUpdated.subscribe(VoxelSelect, () => {
@@ -53,5 +52,6 @@ export function VoxelSelect() {
         ))}
       </div>
     </div>
-  );
+  ); */
+  return <></>
 }

@@ -1,5 +1,5 @@
-import { DivineVoxelEngineWorld } from "@divinevoxel/core/Contexts/World";
-import { StartWorld } from "@divinevoxel/foundation/Default/Init/StartWorld";
+import { DivineVoxelEngineWorld } from "@divinevoxel/vlox/Contexts/World";
+import { StartWorld } from "@divinevoxel/vlox/Default/Init/StartWorld";
 import { WorldGen } from "./WorldGen";
 import { voxelData } from "../../Data/VoxelData";
 import { InitWorldPlayer } from "Player/WorldPlayer";

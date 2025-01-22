@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import InitDVErenderer from "@divinevoxel/babylon-renderer/Defaults/Foundation/PBR/InitDVEBRPBR";
-import { DVEFBRCore } from "@divinevoxel/babylon-renderer/Defaults/Foundation/DVEFBRCore";
+import InitDVErenderer from "@divinevoxel/vlox-babylon/Defaults/Foundation/PBR/InitDVEBRPBR";
+import { DVEFBRCore } from "@divinevoxel/vlox-babylon/Defaults/Foundation/DVEFBRCore";
 import { Engine, Scene, UniversalCamera, Vector3 } from "@babylonjs/core";
-import { DivineVoxelEngineRender } from "@divinevoxel/core/Contexts/Render";
+import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
 import { textureData } from "Data/TextureData";
-import { SceneTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/SceneTool";
+import { SceneTool } from "@divinevoxel/vlox-babylon/Defaults/Foundation/Tools/SceneTool";
 import { RenderNodes } from "Classes";
 const worldWorker = new Worker(new URL("./Contexts/World/", import.meta.url), {
   type: "module",
@@ -84,7 +84,7 @@ export function App() {
       });
       /*       const skybox = CreateSphere("skyBox", { diameter: 400.0 }, scene);
       skybox.infiniteDistance = true;
-      const skyboxMat = renderer.nodes.materials.get("#dve_skybox");
+      const skyboxMat = renderer.nodes.materials.get("dve_skybox");
       if (skyboxMat) {
         skybox.material = skyboxMat._material;
         skybox.material!.backFaceCulling = false;

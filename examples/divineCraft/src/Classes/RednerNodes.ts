@@ -1,11 +1,9 @@
-import { DivineVoxelEngineRender } from "@divinevoxel/core/Contexts/Render";
-import { DVEFBRCore } from "@divinevoxel/babylon-renderer/Defaults/Foundation/DVEFBRCore";
+import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
 import { UniversalCamera, type Camera } from "@babylonjs/core";
 import { Scene } from "@babylonjs/core/scene";
 import { Engine } from "@babylonjs/core/Engines/engine";
 
-import { SceneTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/SceneTool";
-import { RenderPlayer } from "Player/Core/Render";
+import { SceneTool } from "@divinevoxel/vlox-babylon/Tools/SceneTool";
 
 export class RenderNodes {
   scene: Scene;
@@ -13,7 +11,5 @@ export class RenderNodes {
   engine: Engine;
   canvas: HTMLCanvasElement;
   sceneTool: SceneTool;
-  core: DVEFBRCore;
   DVER: DivineVoxelEngineRender;
-  player:RenderPlayer
 }

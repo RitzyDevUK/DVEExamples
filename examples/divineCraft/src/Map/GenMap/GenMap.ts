@@ -1,6 +1,6 @@
 import { GenMapTile } from "./GenMapTile";
 import { GenMapTilesRegister } from "./GenMapTilesRegister";
-import { EntityTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/EntityTool";
+import { EntityTool } from "@divinevoxel/vlox-babylon/Tools/EntityTool";
 import {
   Scene,
   Mesh,
@@ -8,12 +8,12 @@ import {
   StandardMaterial,
   ShaderMaterial,
 } from "@babylonjs/core";
-import { LocationData } from "@divinevoxel/core/Math";
-import { WorldSpaces } from "@divinevoxel/core/Data/World/WorldSpaces";
-import { $2dMooreNeighborhood } from "@divinevoxel/core/Math/Constants/CardinalNeighbors.js";
+import { LocationData } from "@divinevoxel/vlox/Math";
+import { WorldSpaces } from "@divinevoxel/vlox/Data/World/WorldSpaces";
+import { $2dMooreNeighborhood } from "@divinevoxel/vlox/Math/Constants/CardinalNeighbors.js";
 import { Distance3D, Vec3Array, Vector3Like } from "@amodx/math";
 import { GenMapTileMaterial } from "./GenMapTileMaterial";
-import { WorldRegister } from "@divinevoxel/foundation/Data/World/WorldRegister";
+import { WorldRegister } from "@divinevoxel/vlox/Data/World/WorldRegister";
 import { Quad } from "../Quad";
 export class GenMap {
   static Constants = {
@@ -108,8 +108,8 @@ export class GenMap {
       }
 
       const columnLocation: LocationData = [location[0], cx, 0, cz];
-
-      const column = WorldRegister.instance.column.get(columnLocation);
+      WorldRegister.instance.setDimension(columnLocation[0])
+      const column = WorldRegister.instance.column.get(columnLocation[1],columnLocation[2],columnLocation[3]);
       if (!column) {
         this.tilesRegister.column.remove(columnLocation);
       } else {

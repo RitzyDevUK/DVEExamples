@@ -1,4 +1,4 @@
-import { AddVoxelData } from "@divinevoxel/foundation/Data/Types/WorldData.types.js";
+import { PaintVoxelData } from "@divinevoxel/vlox/Data/Types/WorldData.types";
 import { GenNodes } from "./GenNodes";
 import { BiomeType } from "./BiomeType";
 import { BiomeEdgeFactor, BiomeRange, BiomeValue } from "Gen/Biome.types";
@@ -26,7 +26,10 @@ const directions = [
 ];
 export abstract class Biome {
   isRiver?: boolean;
-  constructor(public nodes: GenNodes, public biomeType: BiomeType) {}
+  constructor(
+    public nodes: GenNodes,
+    public biomeType: BiomeType
+  ) {}
   findHeightInDirection(
     height: number,
     x: number,
@@ -111,7 +114,7 @@ export abstract class Biome {
     x: number,
     y: number,
     z: number
-  ): Partial<AddVoxelData> | false;
+  ): Partial<PaintVoxelData> | false;
   abstract getCarved(x: number, y: number, z: number): boolean;
   abstract getBlendtoHeight(x: number, y: number, z: number): number;
   abstract getHeight(x: number, y: number, z: number): number;

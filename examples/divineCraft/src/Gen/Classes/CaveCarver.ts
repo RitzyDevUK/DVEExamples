@@ -1,4 +1,3 @@
-import { AddVoxelData } from "@divinevoxel/foundation/Data/Types/WorldData.types.js";
 import { GenNodes } from "./GenNodes";
 export type CaveCarverData = {
   id: string;
@@ -10,9 +9,7 @@ export interface CaveCarverConstructor {
 }
 
 export abstract class CaveCarver {
-  constructor(
-    public nodes: GenNodes
-  ) {}
+  constructor(public nodes: GenNodes) {}
 
   abstract getCarved(x: number, y: number, z: number): boolean;
 

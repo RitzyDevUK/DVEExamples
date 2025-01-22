@@ -1,19 +1,8 @@
-import { BiomeMapTile } from "./BiomeMapTile";
 import { BiomeMapTilesRegister } from "./BiomeMapTilesRegister";
-import { EntityTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/EntityTool";
-import {
-  Scene,
-  Mesh,
-  VertexBuffer,
-  StandardMaterial,
-  ShaderMaterial,
-} from "@babylonjs/core";
-import { LocationData } from "@divinevoxel/core/Math";
-import { WorldSpaces } from "@divinevoxel/core/Data/World/WorldSpaces";
-import { $2dMooreNeighborhood } from "@divinevoxel/core/Math/Constants/CardinalNeighbors.js";
+import { Scene, Mesh, VertexBuffer, ShaderMaterial } from "@babylonjs/core";
+import { LocationData } from "@divinevoxel/vlox/Math";
+import { $2dMooreNeighborhood } from "@divinevoxel/vlox/Math/Constants/CardinalNeighbors.js";
 import { Distance3D, Vec3Array } from "@amodx/math";
-
-import { WorldRegister } from "@divinevoxel/foundation/Data/World/WorldRegister";
 import { Quad } from "../Quad";
 const alignToPowerOf2 = (value: number, powerOf2: number) => {
   const mask = (1 << powerOf2) - 1;

@@ -1,22 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import InitDVErenderer from "@divinevoxel/babylon-renderer/Defaults/Foundation/Classic/InitDVEBRClassic";
-import { DVEFBRCore } from "@divinevoxel/babylon-renderer/Defaults/Foundation/DVEFBRCore";
+import InitDVErenderer from "@divinevoxel/vlox-babylon/Init/Classic/InitDVEBRClassic";
+import { StartRenderer } from "@divinevoxel/vlox/Init/StartRenderer";
 import {
-  CreateBox,
   CreateSphere,
   Engine,
-  FreeCamera,
   Scene,
   UniversalCamera,
   Vector3,
 } from "@babylonjs/core";
-import { DivineVoxelEngineRender } from "@divinevoxel/core/Contexts/Render";
+
 import { textureData } from "Data/TextureData";
-import { SceneTool } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/SceneTool";
-import { InitRenderPlayer } from "Player/RenderPlayer";
+import { SceneTool } from "@divinevoxel/vlox-babylon/Tools/SceneTool";
 import { RenderNodes } from "Classes";
 import { VoxelSelect } from "Components/VoxelSelect/VoxelSelect";
 import { WorldMapComponent } from "Map/WorldMapComponent";
+import { voxelData } from "Data/VoxelData";
 
 const worldWorker = new Worker(new URL("./Contexts/World/", import.meta.url), {
   type: "module",
@@ -48,7 +46,7 @@ export function App() {
     (async () => {
       if (!canvasRef.current) return;
       const canvas = canvasRef.current;
-      const DVER = new DivineVoxelEngineRender();
+
       let antialias = false;
       const engine = new Engine(canvas, antialias);
       engine.doNotHandleContextLost = true;
@@ -91,20 +89,15 @@ export function App() {
         textureData,
       });
 
-      const core = new DVEFBRCore({
-        renderer,
-        nexusWorker,
-      });
-
-      await DVER.init({
-        core,
+      const DVER = await StartRenderer({
+        voxels: voxelData,
         renderer,
         worldWorker,
         constructorWorkers,
       });
       const skybox = CreateSphere("skyBox", { diameter: 400.0 }, scene);
       skybox.infiniteDistance = true;
-      const skyboxMat = renderer.nodes.materials.get("#dve_skybox");
+      const skyboxMat = renderer.materials.get("dve_skybox");
       if (skyboxMat) {
         skybox.material = skyboxMat._material;
         skybox.material!.backFaceCulling = false;
@@ -117,9 +110,12 @@ export function App() {
       sceneTool.options.doRGB(true);
       sceneTool.levels.setSun(0.8);
       sceneTool.levels.setBase(0.01);
+
+      await DVER.threads.world.waitTillTasksExist("start-world");
       if (noWorldGen) {
         DVER.threads.world.runTasks("start-world-test", []);
       } else {
+        console.warn("start world gen");
         DVER.threads.world.runTasks("start-world", []);
       }
 
@@ -127,12 +123,10 @@ export function App() {
       nodes.scene = scene;
       nodes.canvas = canvas;
       nodes.engine = engine;
-      nodes.core = core;
+
       nodes.sceneTool = sceneTool;
       (window as any).nodes = nodes;
       setNodes(nodes);
-      const player = await InitRenderPlayer(DVER, nodes);
-      nodes.player = player;
     })();
   }, []);
 

@@ -1,12 +1,10 @@
-import { LocationData } from "@divinevoxel/core/Math";
+import { LocationData } from "@divinevoxel/vlox/Math";
 import { GenMap } from "./GenMap";
-import { EntityInstance } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/EntityInstance";
-import { WorldRegister } from "@divinevoxel/foundation/Data/World/WorldRegister";
-import { ColumnDataTool } from "@divinevoxel/foundation/Default/Tools/Data/WorldData/ColumnDataTool";
-import { ColumnState } from "@divinevoxel/foundation/Default/IWG/Constants/ColumnState";
+import { EntityInstance } from "@divinevoxel/vlox-babylon/Tools/EntityInstance";
+import { ColumnDataTool } from "@divinevoxel/vlox/Tools/Data/WorldData/ColumnDataTool";
+import { ColumnState } from "@divinevoxel/vlox/Tasks/IWG/Constants/ColumnState";
 import { SafeInterval } from "@amodx/core/Intervals/SafeInterval";
-import { DVEBabylonRenderer } from "@divinevoxel/babylon-renderer/DVEBabylonRenderer";
-import { DivineVoxelEngineRender } from "@divinevoxel/core/Contexts/Render";
+import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
 export class GenMapTile {
   static Tiles: GenMapTile[] = [];
   static columnTool = new ColumnDataTool();

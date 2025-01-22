@@ -1,19 +1,8 @@
-import { LocationData } from "@divinevoxel/core/Math";
+import { LocationData } from "@divinevoxel/vlox/Math";
 import { BiomeMap } from "./BiomeMap";
-import { EntityInstance } from "@divinevoxel/babylon-renderer/Defaults/Foundation/Tools/EntityInstance";
-import { WorldRegister } from "@divinevoxel/foundation/Data/World/WorldRegister";
-import { ColumnDataTool } from "@divinevoxel/foundation/Default/Tools/Data/WorldData/ColumnDataTool";
-import { ColumnState } from "@divinevoxel/foundation/Default/IWG/Constants/ColumnState";
-import { SafeInterval } from "@amodx/core/Intervals/SafeInterval";
-import { DVEBabylonRenderer } from "@divinevoxel/babylon-renderer/DVEBabylonRenderer";
-import { DivineVoxelEngineRender } from "@divinevoxel/core/Contexts/Render";
-import {
-  Engine,
-  Mesh,
-  RawTexture,
-  StandardMaterial,
-  TextureFormat,
-} from "@babylonjs/core";
+import { ColumnDataTool } from "@divinevoxel/vlox/Tools/Data/WorldData/ColumnDataTool";
+import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
+import { Engine, Mesh, RawTexture, StandardMaterial } from "@babylonjs/core";
 import { GetBiomeImageTasks } from "Gen/WorldGen";
 export class BiomeMapTile {
   static Tiles: BiomeMapTile[] = [];
@@ -22,7 +11,10 @@ export class BiomeMapTile {
   _instance: Mesh;
 
   material: StandardMaterial;
-  constructor(public worldMap: BiomeMap, public location: LocationData) {
+  constructor(
+    public worldMap: BiomeMap,
+    public location: LocationData
+  ) {
     this._instance = this.worldMap._instanceMesh.clone();
     this.material = new StandardMaterial("", this.worldMap.scene);
     this._instance.material = this.material;

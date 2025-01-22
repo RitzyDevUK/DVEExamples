@@ -1,15 +1,15 @@
-import { WorldGeneration } from "@divinevoxel/foundation/Default/WorldGeneration/WorldGeneration";
+import { WorldGeneration } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGeneration";
 
-import { WorldGenInterface } from "@divinevoxel/foundation/Interfaces/WorldGen/WorldGen.types";
-import { GenerateTasks } from "@divinevoxel/foundation/Types/Tasks.types";
+import { WorldGenInterface } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGen.types";
+import { GenerateTasks } from "@divinevoxel/vlox/Tasks/Tasks.types";
 import { OverworldWorldGen } from "./OverworldWorldGen";
-import { WorldGenBrush } from "@divinevoxel/foundation/Default/WorldGeneration/WorldGenBrush";
+import { WorldGenBrush } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGenBrush";
 import { GenNodes } from "./Classes/GenNodes";
 import { DimensionGenerator } from "./Classes/DimensionGenerator";
 import RegisterAllBiomes from "./Register/RegisterAllBiomes";
 import { OverWorldGenData } from "./Dimensions/OverWorld";
 import { NooiseLayers } from "./Classes/NoiseLayers";
-import { DataTool } from "@divinevoxel/foundation/Default/Tools/Data/DataTool";
+import { DataTool } from "@divinevoxel/vlox/Tools/Data/DataTool";
 import { Threads } from "@amodx/threads";
 import { Vec3Array } from "@amodx/math";
 import { Trees } from "./Register/Biomes/Tree";
@@ -57,7 +57,7 @@ export class WorldGen implements WorldGenInterface {
   async generate([[dimension, cx, y, cz], data]: GenerateTasks): Promise<any> {
     //  await brush.worldAlloc([x,y,z],[x + 16,y,z + 16])
     const t1 = performance.now();
-    brush.start();
+    brush.start(dimension,cx,y,cz);
   
     this.overWorldGen.generateWorldColumn(cx, cz);
 /*     for (let x = cx; x < cx + 32; x += 16) {
@@ -69,10 +69,10 @@ export class WorldGen implements WorldGenInterface {
     } */
 
     brush.stop();
-    console.log("generated", [cx, cz], performance.now() - t1);
+//    console.log("generated", [cx, cz], performance.now() - t1);
   }
   async decorate([[dimension, x, y, z], data]: GenerateTasks): Promise<any> {
-    brush.start();
+    brush.start(dimension,x,y,z);
     this.overWorldGen.decorateWorldColumn(x, z);
     clearTimeout(clearTimer);
     clearTimer = setTimeout(() => this.overWorldGen.clearCache(), 60_000);
