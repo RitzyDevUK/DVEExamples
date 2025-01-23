@@ -7,7 +7,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -16,7 +16,7 @@ export const voxelData: VoxelData[] = [
           name: "Cobblestone",
           mod: "varation=default",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "varation=default",
@@ -28,7 +28,7 @@ export const voxelData: VoxelData[] = [
           name: "Mossy Cobblestone",
           mod: "varation=mossy",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "varation=mossy",
@@ -65,9 +65,12 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_liquid",
       dve_rendered_material: "dve_liquid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "water",
+      dve_no_ao: true,
+      dve_is_transparent: true,
+      dve_can_have_secondary: true,
       dve_model_data: {
         id: "dve_liquid",
         inputs: {
@@ -84,7 +87,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -93,7 +96,7 @@ export const voxelData: VoxelData[] = [
           name: "Stone",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -114,7 +117,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "sand",
       dve_named_states: [
@@ -123,7 +126,7 @@ export const voxelData: VoxelData[] = [
           name: "Sand",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -145,7 +148,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "grass",
       dve_named_states: [
@@ -154,7 +157,7 @@ export const voxelData: VoxelData[] = [
           name: "Grass Block",
           mod: "snowed=false",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "snowed=false",
@@ -166,7 +169,7 @@ export const voxelData: VoxelData[] = [
           name: "Snowed Grass Block",
           mod: "snowed=false",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "snowed=true",
@@ -213,7 +216,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "dirt",
       dve_named_states: [
@@ -222,7 +225,7 @@ export const voxelData: VoxelData[] = [
           name: "Dirt",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -246,7 +249,7 @@ export const voxelData: VoxelData[] = [
       dve_rendered_material: "dve_glow",
       dve_is_light_source: true,
       dve_light_value: [15, 15, 15],
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -255,7 +258,7 @@ export const voxelData: VoxelData[] = [
           name: "Glow Stone",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -278,7 +281,7 @@ export const voxelData: VoxelData[] = [
       dve_rendered_material: "dve_glow",
       dve_is_light_source: true,
       dve_light_value: [15, 15, 15],
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -287,7 +290,7 @@ export const voxelData: VoxelData[] = [
           name: "stea Latern",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -310,7 +313,7 @@ export const voxelData: VoxelData[] = [
       dve_rendered_material: "dve_glow",
       dve_is_light_source: true,
       dve_light_value: [15, 15, 15],
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -319,7 +322,7 @@ export const voxelData: VoxelData[] = [
           name: "Redstone Lamp",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -341,7 +344,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "leaves",
       dve_named_states: [
@@ -350,7 +353,7 @@ export const voxelData: VoxelData[] = [
           name: "Oak Leaves",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -374,7 +377,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -383,7 +386,7 @@ export const voxelData: VoxelData[] = [
           name: "Oak Log",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -412,7 +415,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -421,7 +424,7 @@ export const voxelData: VoxelData[] = [
           name: "Oak Planks",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -442,7 +445,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "grass",
       dve_named_states: [
@@ -451,7 +454,7 @@ export const voxelData: VoxelData[] = [
           name: "Dark Oak Leaves",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -475,7 +478,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -484,7 +487,7 @@ export const voxelData: VoxelData[] = [
           name: "Dark Oak Log",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -513,7 +516,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -522,7 +525,7 @@ export const voxelData: VoxelData[] = [
           name: "Dark Oak Log Planks",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -543,7 +546,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "grass",
       dve_named_states: [
@@ -552,7 +555,7 @@ export const voxelData: VoxelData[] = [
           name: "Acacia Leaves",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -576,7 +579,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -585,7 +588,7 @@ export const voxelData: VoxelData[] = [
           name: "Acacia Log",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -614,7 +617,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -623,7 +626,7 @@ export const voxelData: VoxelData[] = [
           name: "Acacia Planks",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -644,7 +647,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "grass",
       dve_named_states: [
@@ -653,7 +656,7 @@ export const voxelData: VoxelData[] = [
           name: "Acacia Birch Leaves",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -677,7 +680,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
     },
@@ -687,7 +690,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -696,7 +699,7 @@ export const voxelData: VoxelData[] = [
           name: "Birch Log",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -725,7 +728,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -734,7 +737,7 @@ export const voxelData: VoxelData[] = [
           name: "Birch Planks",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -755,7 +758,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "leaves",
       dve_named_states: [
@@ -764,7 +767,7 @@ export const voxelData: VoxelData[] = [
           name: "Spruce Leaves",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -788,7 +791,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
       dve_named_states: [
@@ -797,7 +800,7 @@ export const voxelData: VoxelData[] = [
           name: "Spruce Planks",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -818,7 +821,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "snow",
       dve_named_states: [
@@ -827,7 +830,7 @@ export const voxelData: VoxelData[] = [
           name: "Snow",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -848,7 +851,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "ice",
       dve_named_states: [
@@ -857,7 +860,7 @@ export const voxelData: VoxelData[] = [
           name: "Ice",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -878,7 +881,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -887,7 +890,7 @@ export const voxelData: VoxelData[] = [
           name: "Andesite",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -908,7 +911,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -917,7 +920,7 @@ export const voxelData: VoxelData[] = [
           name: "Smooth Andesite",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -938,7 +941,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -947,7 +950,7 @@ export const voxelData: VoxelData[] = [
           name: "Granite",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -968,7 +971,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -977,7 +980,7 @@ export const voxelData: VoxelData[] = [
           name: "Smooth Granite",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -998,7 +1001,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -1007,7 +1010,7 @@ export const voxelData: VoxelData[] = [
           name: "Gravel",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1028,7 +1031,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "stone",
       dve_named_states: [
@@ -1037,7 +1040,7 @@ export const voxelData: VoxelData[] = [
           name: "Clay",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1058,7 +1061,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_transparent",
       dve_rendered_material: "dve_transparent",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "glass",
       dve_is_transparent: true,
@@ -1068,7 +1071,7 @@ export const voxelData: VoxelData[] = [
           name: "Glass",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1089,7 +1092,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "dirt",
       dve_named_states: [
@@ -1098,7 +1101,7 @@ export const voxelData: VoxelData[] = [
           name: "Podzol",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1120,7 +1123,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "ore",
       dve_named_states: [
@@ -1129,7 +1132,7 @@ export const voxelData: VoxelData[] = [
           name: "Emerald Ore",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1150,7 +1153,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "ore",
       dve_named_states: [
@@ -1159,7 +1162,7 @@ export const voxelData: VoxelData[] = [
           name: "Gold Ore",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1180,7 +1183,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "ore",
       dve_named_states: [
@@ -1189,7 +1192,7 @@ export const voxelData: VoxelData[] = [
           name: "Iron Ore",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1210,7 +1213,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "ore",
       dve_named_states: [
@@ -1219,7 +1222,7 @@ export const voxelData: VoxelData[] = [
           name: "Lapis Ore",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1240,7 +1243,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "ore",
       dve_named_states: [
@@ -1249,7 +1252,7 @@ export const voxelData: VoxelData[] = [
           name: "Redstone Ore",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1270,7 +1273,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "ore",
       dve_named_states: [
@@ -1279,7 +1282,7 @@ export const voxelData: VoxelData[] = [
           name: "Redstone Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1300,7 +1303,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "coal",
       dve_named_states: [
@@ -1309,7 +1312,7 @@ export const voxelData: VoxelData[] = [
           name: "Coal Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1330,7 +1333,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "diamond",
       dve_named_states: [
@@ -1339,7 +1342,7 @@ export const voxelData: VoxelData[] = [
           name: "Diamond Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1360,7 +1363,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "gold",
       dve_named_states: [
@@ -1369,7 +1372,7 @@ export const voxelData: VoxelData[] = [
           name: "Gold Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1390,7 +1393,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "iron",
       dve_named_states: [
@@ -1399,7 +1402,7 @@ export const voxelData: VoxelData[] = [
           name: "Iron Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1420,7 +1423,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "iron",
       dve_named_states: [
@@ -1429,7 +1432,7 @@ export const voxelData: VoxelData[] = [
           name: "Mushroom Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1450,7 +1453,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "iron",
       dve_named_states: [
@@ -1459,7 +1462,7 @@ export const voxelData: VoxelData[] = [
           name: "Red Mushroom Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1480,7 +1483,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "iron",
       dve_named_states: [
@@ -1489,7 +1492,7 @@ export const voxelData: VoxelData[] = [
           name: "Brown Mushroom Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1510,7 +1513,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "mycelium",
       dve_named_states: [
@@ -1519,7 +1522,7 @@ export const voxelData: VoxelData[] = [
           name: "Mycelium Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1540,7 +1543,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_no_ao: true,
       dve_is_transparent: true,
@@ -1551,7 +1554,7 @@ export const voxelData: VoxelData[] = [
           name: "Tall Fern",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1575,7 +1578,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_is_transparent: true,
@@ -1586,7 +1589,7 @@ export const voxelData: VoxelData[] = [
           name: "Tall Grass",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1610,7 +1613,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1621,7 +1624,7 @@ export const voxelData: VoxelData[] = [
           name: "Tall Rose",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1645,7 +1648,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1656,7 +1659,7 @@ export const voxelData: VoxelData[] = [
           name: "Tall Rose",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1680,7 +1683,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1691,7 +1694,7 @@ export const voxelData: VoxelData[] = [
           name: "Tall Rose",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1715,7 +1718,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1726,7 +1729,7 @@ export const voxelData: VoxelData[] = [
           name: "Blue Orchid Flower",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1750,7 +1753,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1761,7 +1764,7 @@ export const voxelData: VoxelData[] = [
           name: "Dandelion Flower",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1785,7 +1788,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1796,7 +1799,7 @@ export const voxelData: VoxelData[] = [
           name: "Oxeye Daisy Flower",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1820,7 +1823,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1831,7 +1834,7 @@ export const voxelData: VoxelData[] = [
           name: "Tulip Flower",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1855,7 +1858,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1866,7 +1869,7 @@ export const voxelData: VoxelData[] = [
           name: "Waterlily Flower",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1891,7 +1894,7 @@ export const voxelData: VoxelData[] = [
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
       dve_shape_id: "dve_panel",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1902,7 +1905,7 @@ export const voxelData: VoxelData[] = [
           name: "Vine",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1926,7 +1929,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1937,7 +1940,7 @@ export const voxelData: VoxelData[] = [
           name: "Fern",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1961,7 +1964,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
       dve_no_ao: true,
@@ -1972,7 +1975,7 @@ export const voxelData: VoxelData[] = [
           name: "Sea Grass",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -1996,16 +1999,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
-      dve_voxel_material: "grass",
+      dve_voxel_material: "reed",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_reeds",
           name: "Reeds",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2029,16 +2034,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_kelp",
           name: "Kelp",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2062,16 +2069,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "grass",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_grass",
           name: "Grass",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2095,7 +2104,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "grass",
       dve_named_states: [
@@ -2104,7 +2113,7 @@ export const voxelData: VoxelData[] = [
           name: "Cactus",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2127,16 +2136,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_brain_coral",
           name: "Brain Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2160,7 +2171,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "coral_block",
       dve_named_states: [
@@ -2169,7 +2180,7 @@ export const voxelData: VoxelData[] = [
           name: "Brain Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2191,7 +2202,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
       dve_named_states: [
@@ -2200,7 +2211,7 @@ export const voxelData: VoxelData[] = [
           name: "Bubble Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2224,7 +2235,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "coral_block",
       dve_named_states: [
@@ -2233,7 +2244,7 @@ export const voxelData: VoxelData[] = [
           name: "Bubble Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2255,7 +2266,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "dead_coral_block",
       dve_named_states: [
@@ -2264,7 +2275,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Brain Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2286,7 +2297,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "dead_coral_block",
       dve_named_states: [
@@ -2295,7 +2306,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Bubble Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2317,16 +2328,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_dead_fire_coral",
           name: "Dead Fire Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2350,7 +2363,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "dead_coral_block",
       dve_named_states: [
@@ -2359,7 +2372,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Fire Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2381,16 +2394,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_dead_horn_coral",
           name: "Dead Horn Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2414,7 +2429,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "dead_coral_block",
       dve_named_states: [
@@ -2423,7 +2438,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Horn Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2447,16 +2462,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_dead_tube_coral",
           name: "Dead Tube Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2480,7 +2497,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "dead_coral_block",
       dve_named_states: [
@@ -2489,7 +2506,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Tube Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2511,16 +2528,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_dead_brain_coral",
           name: "Dead Brain Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2544,16 +2563,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_dead_bubble_coral",
           name: "Dead Bubble Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2577,16 +2598,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_fire_coral",
           name: "Fire Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2610,7 +2633,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "coral_block",
       dve_named_states: [
@@ -2619,7 +2642,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Fire Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2641,16 +2664,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_horn_coral",
           name: "Horn Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2674,7 +2699,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "coral_block",
       dve_named_states: [
@@ -2683,7 +2708,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Horn Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2705,16 +2730,18 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_flora",
       dve_rendered_material: "dve_flora",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: false,
       dve_voxel_material: "coral",
+      dve_no_ao: true,
+      dve_is_transparent: true,
       dve_named_states: [
         {
           id: "dc_tube_coral",
           name: "Tube Coral",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2738,7 +2765,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "coral_block",
       dve_named_states: [
@@ -2747,7 +2774,7 @@ export const voxelData: VoxelData[] = [
           name: "Dead Tube Coral Block",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2770,7 +2797,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "prismarine",
       dve_named_states: [
@@ -2779,7 +2806,7 @@ export const voxelData: VoxelData[] = [
           name: "Dark Prismarine",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2801,7 +2828,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "prismarine",
       dve_named_states: [
@@ -2810,7 +2837,7 @@ export const voxelData: VoxelData[] = [
           name: "Prismarine",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2832,7 +2859,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "prismarine",
       dve_named_states: [
@@ -2841,7 +2868,7 @@ export const voxelData: VoxelData[] = [
           name: "Prismarine Bricks",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2864,7 +2891,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "bedrock",
       dve_named_states: [
@@ -2873,7 +2900,7 @@ export const voxelData: VoxelData[] = [
           name: "Bedrock",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",
@@ -2895,7 +2922,7 @@ export const voxelData: VoxelData[] = [
     properties: {
       dve_substance: "dve_solid",
       dve_rendered_material: "dve_solid",
-      dve_collider_id: "dve_box",
+      dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "obsidian",
       dve_named_states: [
@@ -2904,7 +2931,7 @@ export const voxelData: VoxelData[] = [
           name: "Obsidan",
           mod: "*",
           state: "*",
-          properties: [],
+          properties: {},
           display: {
             type: "model",
             mod: "*",

@@ -1,6 +1,6 @@
 import { PerlinNoise3d } from "@amodx/rng/perlin/index";
 import { BrushTool } from "@divinevoxel/vlox/Tools/Brush/Brush";
-import { DataTool } from "@divinevoxel/vlox/Tools/Data/DataTool";
+
 import { WorldGenBrush } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGenBrush";
 const worldPerlin = new PerlinNoise3d();
 worldPerlin.noiseSeed(8908908090);
@@ -29,7 +29,7 @@ enum Biomes {
 }
 
 const brush = new BrushTool();
-const dataTool = new DataTool();
+
 export class OverworldWorldGen {
   chunkDepth = 16;
   chunkWidth = 16;
@@ -135,7 +135,6 @@ export class OverworldWorldGen {
   }
 
   generateWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
-
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
         const height = this.noiseHeight(x, z);
@@ -147,34 +146,35 @@ export class OverworldWorldGen {
         }
       }
     }
-  
   }
   carveWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
-
+    const dataTool = brush.dataCursor;
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
         for (let y = 0; y < this.worldHeight; y++) {
           if (y == 0) {
             continue;
           }
-          if (dataTool.loadInAt(x, y, z) && !dataTool.isRenderable()) continue;
+          const voxel = dataTool.getVoxel(x, y, z);
+
+          if (voxel && !voxel.isRenderable()) continue;
           if (this.carveCave(x, y, z)) {
-            const voxel = dataTool.getStringId();
-            if (voxel == voxels.water) continue;
+            if (voxel?.getStringId() == voxels.water) continue;
             brush.setXYZ(x, y, z).erase();
           }
         }
       }
     }
-
   }
   fillWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
-  
+    const dataTool = brush.dataCursor;
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
         const biomes = this.getBiome(x, z);
         for (let y = this.waterHeight + 1; y > 0; y--) {
-          if (dataTool.loadInAt(x, y, z) && dataTool.isRenderable()) {
+          const voxel = dataTool.getVoxel(x, y, z);
+
+          if (voxel && voxel.isRenderable()) {
             let i = y;
             while (i <= this.waterHeight) {
               if (y < this.waterHeight && biomes == Biomes.Ocean) {
@@ -197,19 +197,15 @@ export class OverworldWorldGen {
         }
       }
     }
-
   }
   addTopLayersToColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
-  
+    const dataTool = brush.dataCursor;
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
         const biomes = this.getBiome(x, z);
         for (let y = 1; y < this.worldHeight; y++) {
-          dataTool.loadInAt(x, y + 1, z);
-
-          const topAir = dataTool.isAir();
-          dataTool.loadInAt(x, y, z);
-          const voxel = dataTool.getStringId();
+          const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
+          const voxelId = dataTool.getVoxel(x, y, z)?.getStringId();
 
           if (
             biomes == Biomes.Grassland ||
@@ -217,7 +213,7 @@ export class OverworldWorldGen {
             biomes == Biomes.Beach ||
             biomes == Biomes.Forest
           ) {
-            if (topAir && voxel == voxels.stone) {
+            if (topAir && voxelId == voxels.stone) {
               brush.setId(voxels.grassBlock).setXYZ(x, y, z).paint();
               let i = 5;
               while (i--) {
@@ -229,7 +225,7 @@ export class OverworldWorldGen {
             }
           }
           if (biomes == Biomes.Desert) {
-            if (topAir && voxel == voxels.stone) {
+            if (topAir && voxelId == voxels.stone) {
               brush.setId(voxels.sand).setXYZ(x, y, z).paint();
               let i = 5;
               while (i--) {
@@ -243,19 +239,15 @@ export class OverworldWorldGen {
         }
       }
     }
-    
   }
   decorateWorldColumn(brush: WorldGenBrush, chunkX: number, chunkZ: number) {
- 
+    const dataTool = brush.dataCursor;
     for (let x = chunkX; x < this.chunkWidth + chunkX; x++) {
       for (let z = chunkZ; z < this.chunkDepth + chunkZ; z++) {
         const biomes = this.getBiome(x, z);
         for (let y = 1; y < this.worldHeight; y++) {
-          dataTool.loadInAt(x, y + 1, z);
-
-          const topAir = dataTool.isAir();
-          dataTool.loadInAt(x, y, z);
-          const voxel = dataTool.getStringId();
+          const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || false;
+          const voxelId = dataTool.getVoxel(x, y, z)?.getStringId();
 
           if (
             biomes == Biomes.Grassland ||
@@ -263,14 +255,14 @@ export class OverworldWorldGen {
             biomes == Biomes.Beach ||
             biomes == Biomes.Forest
           ) {
-            if (topAir && voxel == voxels.grassBlock) {
+            if (topAir && voxelId == voxels.grassBlock) {
               if (Math.random() > (biomes == Biomes.Forest ? 0.9 : 0.99)) {
                 this.generateTree(x, y + 1, z);
               }
             }
           }
           if (biomes == Biomes.Desert) {
-            if (topAir && voxel == voxels.grassBlock) {
+            if (topAir && voxelId == voxels.grassBlock) {
               if (Math.random() > 0.999) {
                 this.generateTree(x, y + 1, z);
               }
@@ -279,6 +271,5 @@ export class OverworldWorldGen {
         }
       }
     }
-   
   }
 }

@@ -15,6 +15,7 @@ import { Vec3Array } from "@amodx/math";
 import { Trees } from "./Register/Biomes/Tree";
 import { Coral } from "./Register/Biomes/Coral";
 import { Caves } from "./Register/Biomes/Caves";
+import { SubstanceDataTool } from "@divinevoxel/vlox/Tools/Data/SubstanceDataTool";
 
 const brush = new WorldGenBrush();
 const overWorld = new OverworldWorldGen();
@@ -46,7 +47,7 @@ export class WorldGen implements WorldGenInterface {
       worldDetailNoise: 4938274938274,
       worldGenDetailNoise: 1029381029381,
     });
-    this.nodes.init({ noise, brush, dataTool });
+    this.nodes.init({ noise, brush, substanceTool: new SubstanceDataTool() });
     this.overWorldGen = new DimensionGenerator(this.nodes, OverWorldGenData);
     this.overWorldGen.init();
     Trees.init(this.nodes);
@@ -56,11 +57,11 @@ export class WorldGen implements WorldGenInterface {
 
   async generate([[dimension, cx, y, cz], data]: GenerateTasks): Promise<any> {
     //  await brush.worldAlloc([x,y,z],[x + 16,y,z + 16])
-    const t1 = performance.now();
-    brush.start(dimension,cx,y,cz);
-  
+    // const t1 = performance.now();
+    brush.start(dimension, cx, y, cz);
+
     this.overWorldGen.generateWorldColumn(cx, cz);
-/*     for (let x = cx; x < cx + 32; x += 16) {
+    /*     for (let x = cx; x < cx + 32; x += 16) {
       for (let z = cz; z < cz + 32; z += 16) {
         this.overWorldGen.generateWorldColumn(x, z);
         //    this.overWorldGen.carveWorldColumn(x, z);
@@ -69,10 +70,10 @@ export class WorldGen implements WorldGenInterface {
     } */
 
     brush.stop();
-//    console.log("generated", [cx, cz], performance.now() - t1);
+    //    console.log("generated", [cx, cz], performance.now() - t1);
   }
   async decorate([[dimension, x, y, z], data]: GenerateTasks): Promise<any> {
-    brush.start(dimension,x,y,z);
+    brush.start(dimension, x, y, z);
     this.overWorldGen.decorateWorldColumn(x, z);
     clearTimeout(clearTimer);
     clearTimer = setTimeout(() => this.overWorldGen.clearCache(), 60_000);

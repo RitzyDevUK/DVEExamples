@@ -24,7 +24,10 @@ function vector3Hash(x: number, y: number, z: number) {
 export class DimensionGenerator {
   biomeTypes = new Map<string, BiomeType>();
 
-  constructor(public nodes: GenNodes, public data: DimensionGeneratorData) {}
+  constructor(
+    public nodes: GenNodes,
+    public data: DimensionGeneratorData
+  ) {}
 
   init() {
     for (const [biome, range] of this.data.biomeTypes) {
@@ -160,54 +163,57 @@ export class DimensionGenerator {
   getElavation(x: number, y: number, z: number) {
     const elavationScale = 1024;
     const max = 2 ** 32;
-    let fluffNoise = this.nodes.noise.biomeDetailNoise(x / 100, 50, z / 100) * 0.1;
+    let fluffNoise =
+      this.nodes.noise.biomeDetailNoise(x / 100, 50, z / 100) * 0.1;
     const elavation = this.nodes.noise.biomeTypeElevationNoise(
       (x - max) / elavationScale,
       (z + max) / elavationScale
     );
     let result = elavation + fluffNoise;
-  
+
     if (result > 1 || result < -1) {
       fluffNoise = -fluffNoise;
       result = elavation + fluffNoise;
     }
-  
+
     return Math.max(-1, Math.min(1, result));
   }
-  
+
   getTempature(x: number, y: number, z: number) {
     const tempatureScale = 4096;
     const max = 2 ** 32;
-    let fluffNoise = this.nodes.noise.biomeDetailNoise(x / 100, 5880, z / 100) * 0.1;
+    let fluffNoise =
+      this.nodes.noise.biomeDetailNoise(x / 100, 5880, z / 100) * 0.1;
     const tempature = this.nodes.noise.biomeTypeTemperatureNoise(
       (x - max) / tempatureScale,
       (z - max) / tempatureScale
     );
     let result = tempature + fluffNoise;
-  
+
     if (result > 1 || result < -1) {
       fluffNoise = -fluffNoise;
       result = tempature + fluffNoise;
     }
-  
+
     return Math.max(-1, Math.min(1, result));
   }
-  
+
   getMostiure(x: number, y: number, z: number) {
     const moistureScale = 1024;
     const max = 2 ** 32;
-    let fluffNoise = this.nodes.noise.biomeDetailNoise(x / 100, 10980, z / 100) * 0.1;
+    let fluffNoise =
+      this.nodes.noise.biomeDetailNoise(x / 100, 10980, z / 100) * 0.1;
     const moisture = this.nodes.noise.biomeTypeMoistureNoise(
       (x - max) / moistureScale,
       (z - max) / moistureScale
     );
     let result = moisture + fluffNoise;
-  
+
     if (result > 1 || result < -1) {
       fluffNoise = -fluffNoise;
       result = moisture + fluffNoise;
     }
-  
+
     return Math.max(-1, Math.min(1, result));
   }
   getBiomeTypeValue(x: number, y: number, z: number): BiomeValue {
@@ -266,8 +272,9 @@ export class DimensionGenerator {
   }
 
   generateWorldColumn(chunkX: number, chunkZ: number) {
-    const { brush, dataTool } = this.nodes;
+    const { brush } = this.nodes;
 
+    const dataTool = brush.dataCursor;
     let totalGenTime = 0;
     let genTimeCount = 0;
     let totalFillTime = 0;
@@ -299,7 +306,7 @@ export class DimensionGenerator {
         for (let y = height + 10; y >= 0; y--) {
           if (!filled) {
             const hitVoxel =
-              (dataTool.loadInAt(x, y, z) && dataTool.isRenderable()) || y == 1;
+              dataTool.getVoxel(x, y, z)?.isRenderable() || y == 1;
             if (hitVoxel) {
               filled = true;
               biome.fill(x, y + 1, z);

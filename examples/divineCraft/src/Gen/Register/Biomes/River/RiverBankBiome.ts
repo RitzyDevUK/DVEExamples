@@ -43,13 +43,15 @@ export class RiverBankBiome extends Biome {
   }
 
   addTopLayer(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-    dataTool.loadInAt(x, y + 1, z);
-    const topAir = dataTool.isAir();
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
     if (topAir && voxel == Voxels.Stone) {
-      brush.setId(this.getFillVoxel(x, y, z, true)).setXYZ(x, y, z).paint();
+      brush
+        .setId(this.getFillVoxel(x, y, z, true))
+        .setXYZ(x, y, z)
+        .paint();
       let i = 5;
       while (i--) {
         brush
@@ -78,11 +80,12 @@ export class RiverBankBiome extends Biome {
     return Voxels.Gravel;
   }
   fill(x: number, y: number, z: number) {
-    const { brush, dataTool } = this.nodes;
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
     let i = y;
     while (i <= this.nodes.waterHeight) {
       if (y < this.nodes.waterHeight) {
-        if (!dataTool.loadInAt(x, y, z) && dataTool.isRenderable()) {
+        if (!dataTool.getVoxel(x, y, z)?.isRenderable()) {
           brush
             .setId(this.getFillVoxel(x, i, z, i == this.nodes.waterHeight))
             .setXYZ(x, i, z)
@@ -93,11 +96,10 @@ export class RiverBankBiome extends Biome {
     }
   }
   decorate(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-    dataTool.loadInAt(x, y + 1, z);
-    const topAir = dataTool.isAir();
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
     if (topAir && voxel == Voxels.GrassBlock) {
       const value = Math.random();
 

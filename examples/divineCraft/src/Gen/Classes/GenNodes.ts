@@ -1,6 +1,7 @@
 import { WorldGenBrush } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGenBrush";
 import { NooiseLayers } from "./NoiseLayers";
 import { DataTool } from "@divinevoxel/vlox/Tools/Data/DataTool";
+import { SubstanceDataTool } from "@divinevoxel/vlox/Tools/Data/SubstanceDataTool";
 
 export class GenNodes {
   chunkDepth = 16;
@@ -11,16 +12,17 @@ export class GenNodes {
   waterHeight = 60;
   noise: NooiseLayers;
   brush: WorldGenBrush;
-  dataTool: DataTool;
+  substanceTool: SubstanceDataTool;
 
   init(data:{
     noise: NooiseLayers;
     brush: WorldGenBrush;
-    dataTool: DataTool;
+    substanceTool: SubstanceDataTool;
+
   }) {
     this.noise = data.noise;
     this.brush = data.brush;
-    this.dataTool = data.dataTool;
+    this.substanceTool = data.substanceTool;
 
   }
 }

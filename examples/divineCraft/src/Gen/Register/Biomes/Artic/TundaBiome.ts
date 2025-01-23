@@ -29,7 +29,6 @@ export class TundraBiome extends Biome {
     return this.getHeight(x, y, z);
   }
   noiseQuery(x: number, y: number, z: number) {
-
     return (
       (1 +
         this.nodes.noise.worldGenNoise(
@@ -46,11 +45,11 @@ export class TundraBiome extends Biome {
   }
 
   addTopLayer(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-    dataTool.loadInAt(x, y + 1, z);
-    const topAir = dataTool.isAir();
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+
     if (topAir && voxel == Voxels.Stone!) {
       brush.setData(VoxelData[Voxels.GrassBlock]).setXYZ(x, y, z).paint();
       brush
@@ -73,11 +72,11 @@ export class TundraBiome extends Biome {
     return false;
   }
   decorate(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-    dataTool.loadInAt(x, y + 1, z);
-    const topAir = dataTool.isAir();
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+
     if (topAir && voxel == Voxels.GrassBlock) {
       const value = Math.random();
 

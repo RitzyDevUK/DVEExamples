@@ -52,12 +52,11 @@ getHeight(x: number, y: number, z: number): number {
 }
 
   addTopLayer(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
     if(y < 150) return true;
-    dataTool.loadInAt(x, y + 1, z);
-    const topAir = dataTool.isAir();
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
       brush.setData(VoxelData[Voxels.Snow]).setXYZ(x, y, z).paint();
       brush
@@ -80,11 +79,7 @@ getHeight(x: number, y: number, z: number): number {
     return false;
   }
   decorate(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-    dataTool.loadInAt(x, y + 1, z);
-    const topAir = dataTool.isAir();
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
+
   }
 
   getData(): BiomeData {

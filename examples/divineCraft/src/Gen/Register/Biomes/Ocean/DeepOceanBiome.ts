@@ -49,12 +49,14 @@ export class DeepOceanBiome extends Biome {
   }
 
   addTopLayer(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-
-    const topAir =
-      dataTool.loadInAt(x, y + 1, z) &&
-      (dataTool.isAir() || dataTool.getSubstnaceData().isLiquid());
-    const voxel = dataTool.loadInAt(x, y, z) && dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topVoxel = dataTool.getVoxel(x, y + 1, z);
+    const topAir = topVoxel?.isAir() || topVoxel?.isRenderable() &&
+    this.nodes.substanceTool
+      .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
+      .isLiquid() || false;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
       brush.setData(VoxelData[Voxels.Dirt]).setXYZ(x, y, z).paint();
       let i = 5;
@@ -79,12 +81,15 @@ export class DeepOceanBiome extends Biome {
     }
   }
   decorate(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-    dataTool.loadInAt(x, y + 1, z);
-    const topWater = dataTool.getStringId() == Voxels.Water;
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
-    if (topWater && (voxel == Voxels.Dirt || voxel == Voxels.Sand)) {
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topVoxel = dataTool.getVoxel(x, y + 1, z);
+    const topAir = topVoxel?.isAir() || topVoxel?.isRenderable() &&
+    this.nodes.substanceTool
+      .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
+      .isLiquid() || false;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    if (topAir && (voxel == Voxels.Dirt || voxel == Voxels.Sand)) {
       const value = Math.random();
 
       if (value > 0.87 && value < 0.89) {

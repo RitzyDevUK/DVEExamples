@@ -53,24 +53,22 @@ export class RiverBiome extends Biome {
     return Voxels.Clay;
   }
   addTopLayer(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-
-    let topAir = false;
-    if (dataTool.loadInAt(x, y + 1, z)) {
-      if (dataTool.isAir()) {
-        topAir = true;
-      } else {
-        if (dataTool.isRenderable()) {
-          if (dataTool.getSubstnaceData().isLiquid()) {
-            topAir = true;
-          }
-        }
-      }
-    }
-
-    const voxel = dataTool.loadInAt(x, y, z) && dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topVoxel = dataTool.getVoxel(x, y + 1, z);
+    const topAir =
+      topVoxel?.isAir() ||
+      (topVoxel?.isRenderable() &&
+        this.nodes.substanceTool
+          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
+          .isLiquid()) ||
+      false;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
-      brush.setId(this.getLayerVoxel(x, y, z)).setXYZ(x, y, z).paint();
+      brush
+        .setId(this.getLayerVoxel(x, y, z))
+        .setXYZ(x, y, z)
+        .paint();
       let i = 5;
       while (i--) {
         brush
@@ -94,13 +92,19 @@ export class RiverBiome extends Biome {
     }
   }
   decorate(x: number, y: number, z: number) {
-    const { dataTool, brush } = this.nodes;
-    dataTool.loadInAt(x, y + 1, z);
-    const topWater = dataTool.getStringId() == Voxels.Water;
-    dataTool.loadInAt(x, y, z);
-    const voxel = dataTool.getStringId();
+    const brush = this.nodes.brush;
+    const dataTool = brush.dataCursor;
+    const topVoxel = dataTool.getVoxel(x, y + 1, z);
+    const topAir =
+      topVoxel?.isAir() ||
+      (topVoxel?.isRenderable() &&
+        this.nodes.substanceTool
+          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
+          .isLiquid()) ||
+      false;
+    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
     if (
-      topWater &&
+      topAir &&
       (voxel == Voxels.Dirt || voxel == Voxels.Sand) &&
       y < this.nodes.waterHeight - 1
     ) {

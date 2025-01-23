@@ -17,17 +17,20 @@ import {
   ArcRotateCamera,
 } from "@babylonjs/core";
 import { TopDownCamera } from "./TopDownCamera";
-import { RenderNodes } from "../Classes/RednerNodes";
 import { GenMap } from "./GenMap/GenMap";
 import { SafeInterval } from "@amodx/core/Intervals/SafeInterval";
 import { BiomeMap } from "./BiomeMap/BiomeMap";
+import { Graph } from "@amodx/ncs";
+import { GameComponent } from "Game.component";
+import { TransformComponent } from "@dvegames/vlox/Core/Components/Base/Transform.component";
+import { CameraProviderComponent } from "@dvegames/vlox/Babylon/Components/Providers/CameraProvider.component";
 
 enum MapModes {
   Biome,
   WorldGen,
 }
 
-export function WorldMapComponent(props: { nodes: RenderNodes }) {
+export function WorldMapComponent(props: { graph: Graph }) {
   const containerRef = useRef<HTMLCanvasElement | null>(null);
   const mapRef = useRef<GenMap | BiomeMap>(new GenMap());
   const [big, setBig] = useState(true);
@@ -38,6 +41,12 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
   } | null>(null);
 
   const renderState = useRef({ isBig: false, mode: MapModes.WorldGen });
+
+  const game = GameComponent.getRequired(props.graph.root);
+  const playerTransform = TransformComponent.getRequired(game.data.player.node);
+  const playerCamera = CameraProviderComponent.getRequiredChild(
+    playerTransform.node
+  );
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -191,10 +200,19 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
     resized.observe(containerRef.current!);
     engine.runRenderLoop(() => {
       if (!renderState.current.isBig) {
-        //     follow.position.copyFrom(props.nodes.player.model.model.position);
-        //    fixedParent.position.copyFrom(props.nodes.player.model.model.position);
+        const playerPosition = playerTransform.schema.position;
+        follow.position.set(
+          playerPosition.x,
+          playerPosition.y,
+          playerPosition.z
+        );
+        fixedParent.position.set(
+          playerPosition.x,
+          playerPosition.y,
+          playerPosition.z
+        );
 
-        const direction = props.nodes.camera
+        const direction = playerCamera.data.camera
           .getDirection(new Vector3(0, 0, 1))
           .normalize();
 
@@ -235,15 +253,15 @@ export function WorldMapComponent(props: { nodes: RenderNodes }) {
     let mode = renderState.current.mode;
 
     const inte = new SafeInterval(() => {
-      mapRef.current.updateTiles(["main", 0, 0, 0]);
+      //   mapRef.current.updateTiles(["main", 0, 0, 0]);
       //   if (!props.nodes.player?.model?.model) return;
 
-      /*       mapRef.current.updateTiles([
+      mapRef.current.updateTiles([
         "main",
-        props.nodes.player.model.model.position.x,
-        props.nodes.player.model.model.position.y,
-        props.nodes.player.model.model.position.z,
-      ]); */
+        playerTransform.schema.position.x,
+        playerTransform.schema.position.y,
+        playerTransform.schema.position.z,
+      ]);
     }, 500);
     inte.start();
   }, []);
