@@ -1,7 +1,7 @@
-import { PaintVoxelData } from "@divinevoxel/vlox/Data/Types/WorldData.types";
+import { PaintVoxelData } from "@divinevoxel/vlox/Voxels";
 import { GenNodes } from "./GenNodes";
 import { BiomeType } from "./BiomeType";
-import { BiomeEdgeFactor, BiomeRange, BiomeValue } from "Gen/Biome.types";
+import { BiomeEdgeFactor, BiomeRange } from "Gen/Biome.types";
 import { Vec3Array } from "@amodx/math";
 export type BiomeData = {
   id: string;

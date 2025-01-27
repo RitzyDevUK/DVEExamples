@@ -1,8 +1,12 @@
 import { NCS } from "@amodx/ncs/";
 import { PlayerComponent } from "./Player/Components/Player.component";
+import { GameScreensComponent } from "Screens/GameScreens.component";
+import { ItemRegisterComponent } from "Items/Components";
 
 class Data {
-  player: (typeof PlayerComponent)["default"];
+  activePlayer: (typeof PlayerComponent)["default"];
+  screens: (typeof GameScreensComponent)["default"];
+  items: (typeof ItemRegisterComponent)["default"];
   constructor(public component: (typeof GameComponent)["default"]) {}
 }
 

@@ -1,12 +1,11 @@
 import { LocationData } from "@divinevoxel/vlox/Math";
 import { BiomeMap } from "./BiomeMap";
-import { ColumnDataTool } from "@divinevoxel/vlox/Tools/Data/WorldData/ColumnDataTool";
+
 import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
 import { Engine, Mesh, RawTexture, StandardMaterial } from "@babylonjs/core";
 import { GetBiomeImageTasks } from "Gen/WorldGen";
 export class BiomeMapTile {
   static Tiles: BiomeMapTile[] = [];
-  static columnTool = new ColumnDataTool();
 
   _instance: Mesh;
 
@@ -27,13 +26,13 @@ export class BiomeMapTile {
   texture: RawTexture;
   async update() {
     const image =
-      await DivineVoxelEngineRender.instance.threads.construcotrs.runAsyncTasks<GetBiomeImageTasks>(
-        "get-biome-image",
-        [
-          [this.location[1], 0, this.location[3]],
-          [this.location[1] + 1024, 0, this.location[3] + 1024],
-        ]
-      );
+      await DivineVoxelEngineRender.instance.threads.construcotrs.runTaskAsync<
+        GetBiomeImageTasks,
+        Uint8ClampedArray
+      >("get-biome-image", [
+        [this.location[1], 0, this.location[3]],
+        [this.location[1] + 1024, 0, this.location[3] + 1024],
+      ]);
 
     if (image instanceof Uint8ClampedArray) {
       this.texture = new RawTexture(

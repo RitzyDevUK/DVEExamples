@@ -9,11 +9,11 @@ import {
   ShaderMaterial,
 } from "@babylonjs/core";
 import { LocationData } from "@divinevoxel/vlox/Math";
-import { WorldSpaces } from "@divinevoxel/vlox/Data/World/WorldSpaces";
+import { WorldSpaces } from "@divinevoxel/vlox/World/WorldSpaces";
 import { $2dMooreNeighborhood } from "@divinevoxel/vlox/Math/Constants/CardinalNeighbors.js";
 import { Distance3D, Vec3Array, Vector3Like } from "@amodx/math";
 import { GenMapTileMaterial } from "./GenMapTileMaterial";
-import { WorldRegister } from "@divinevoxel/vlox/Data/World/WorldRegister";
+import { WorldRegister } from "@divinevoxel/vlox/World/WorldRegister";
 import { Quad } from "../Quad";
 export class GenMap {
   static Constants = {
@@ -28,7 +28,7 @@ export class GenMap {
   _instanceTool: EntityTool;
   _instanceMesh: Mesh;
   _previousLocation: LocationData;
-  _searchQueue: Vec3Array[] = [];
+  _searchQueue: number[] = [];
   _visitedMap: Map<string, boolean> = new Map();
   constructor() {}
 
@@ -54,9 +54,12 @@ export class GenMap {
 
     const colorBuffer = new Float32Array(GenMap.Constants.MAX_TILES * 4);
 
-    console.log(colorBuffer);
-    this._instanceTool.addBuffer("tileColor", colorBuffer, 4);
-
+    this._instanceTool.mesh.thinInstanceSetBuffer(
+      "tileColor",
+      colorBuffer,
+      4,
+      false
+    );
     this._colorBuffer = colorBuffer;
   }
 
@@ -69,19 +72,17 @@ export class GenMap {
       WorldSpaces.column.getPositionXYZ(location[1], 0, location[3])
     );
 
-    this._searchQueue.push([
+    this._searchQueue.push(
       worldColumnPOS.x,
       worldColumnPOS.y,
-      worldColumnPOS.z,
-    ]);
+      worldColumnPOS.z
+    );
 
     while (this._searchQueue.length) {
-      const node = this._searchQueue.shift();
+      const cx = this._searchQueue.shift()!;
+      const cy = this._searchQueue.shift()!;
+      const cz = this._searchQueue.shift()!;
 
-      if (!node) break;
-      const cx = node[0];
-      const cy = 0;
-      const cz = node[2];
       const columnKey = WorldSpaces.column.getKeyXYZ(cx, 0, cz);
 
       if (this._visitedMap.has(columnKey)) continue;
@@ -98,31 +99,37 @@ export class GenMap {
       if (distance > 600) continue;
 
       for (const n of $2dMooreNeighborhood) {
-        const nx = cx + n[0] * WorldSpaces.column._bounds.x;
-        const nz = cz + n[1] * WorldSpaces.column._bounds.z;
+        const nx = cx + n[0] * WorldSpaces.column.bounds.x;
+        const nz = cz + n[1] * WorldSpaces.column.bounds.z;
         const columnPOS = WorldSpaces.column.getPositionXYZ(nx, cy, nz),
           key = WorldSpaces.column.getKey();
         if (!this._visitedMap.has(key)) {
-          this._searchQueue.push([columnPOS.x, cy, columnPOS.z]);
+          this._searchQueue.push(columnPOS.x, cy, columnPOS.z);
         }
       }
 
       const columnLocation: LocationData = [location[0], cx, 0, cz];
-      WorldRegister.instance.setDimension(columnLocation[0])
-      const column = WorldRegister.instance.column.get(columnLocation[1],columnLocation[2],columnLocation[3]);
+      WorldRegister.setDimension(columnLocation[0]);
+      const column = WorldRegister.column.get(
+        columnLocation[1],
+        columnLocation[2],
+        columnLocation[3]
+      );
       if (!column) {
         this.tilesRegister.column.remove(columnLocation);
       } else {
         if (!this.tilesRegister.column.get(columnLocation)) {
-          this.tilesRegister.column.add(columnLocation);
+          this.tilesRegister.column.add(columnLocation, column);
         }
       }
-      const columnTile = this.tilesRegister.column.get(columnLocation);
-      if (columnTile) columnTile.update();
     }
 
     this._instanceTool.update();
     this._visitedMap.clear();
+    for (let i = 0; i < GenMapTile.Tiles.length; i++) {
+      GenMapTile.Tiles[i].update();
+    }
+    this._instanceTool.mesh.thinInstanceBufferUpdated("tileColor");
   }
   dispose() {
     this._instanceMesh.dispose();

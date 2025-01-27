@@ -1,0 +1,70 @@
+.schema-editor {
+
+  background-color: white;
+  border-radius: 10px;
+
+
+
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #eaecf0;
+
+    padding: 10px;
+    box-shadow: 4px 4px 16px 0px #0000000a;
+
+    .label {
+      display: block;
+    }
+
+    .input {
+      border: none;
+      outline: none;
+      &.checkbox {
+        background-color: #f2f4f7;
+        accent-color: #bd1f2e;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%; 
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      &.range {
+
+      }
+      &.string,
+      &.password {
+        width: 100%;
+        max-width: 50%;
+        background-color: #f2f4f7;
+        padding: 5px;
+        border: 1px solid #f2f4f7;
+        border-radius: 5px;
+      }
+      &.float,&.int {
+        width: 25%;
+        background-color: #f2f4f7;
+        padding: 5px;
+        border: 1px solid #f2f4f7;
+        border-radius: 5px;
+      }
+      &.select {
+        width: auto;
+        max-width: 50%;
+        min-width: 10%;
+        background-color: #f2f4f7;
+        padding: 5px;
+        border: 1px solid #f2f4f7;
+        border-radius: 5px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

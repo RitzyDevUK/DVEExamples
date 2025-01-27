@@ -1,4 +1,4 @@
-import { PaintVoxelData } from "@divinevoxel/vlox/Data/Types/WorldData.types";
+import { PaintVoxelData } from "@divinevoxel/vlox/Voxels";
 
 export enum Voxels {
   Snow = "dc_snow",

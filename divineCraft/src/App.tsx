@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { WorldMapComponent } from "Map/WorldMapComponent";
 import StartGame from "StartGame";
-import { Graph } from "@amodx/ncs";
+import UI from "UI/UI";
+import { GameComponent } from "Game.component";
 
 export function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [graph, setGraph] = useState<Graph | null>(null);
+  const [game, setGraph] = useState<typeof GameComponent["default"] | null>(null);
 
   useEffect(() => {
     (async () => {
       if (!canvasRef.current) return;
       const canvas = canvasRef.current;
-      const nodes = await StartGame(canvas);
-      setGraph(nodes);
+      const graph = await StartGame(canvas);
+      setGraph(graph);
     })();
   }, []);
 
@@ -25,7 +26,8 @@ export function App() {
         overflow: "hidden",
       }}
     >
-      {graph && <WorldMapComponent graph={graph} />}
+      {game && <WorldMapComponent graph={game.node.graph} />}
+      {game && <UI gameRoot={game.node}/>}
       <canvas
         style={{
           width: "100%",

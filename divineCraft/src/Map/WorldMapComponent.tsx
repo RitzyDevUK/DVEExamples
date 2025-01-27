@@ -24,6 +24,8 @@ import { Graph } from "@amodx/ncs";
 import { GameComponent } from "Game.component";
 import { TransformComponent } from "@dvegames/vlox/Core/Components/Base/Transform.component";
 import { CameraProviderComponent } from "@dvegames/vlox/Babylon/Components/Providers/CameraProvider.component";
+import { GenMapTile } from "./GenMap/GenMapTile";
+import { LocationData } from "@divinevoxel/vlox/Math";
 
 enum MapModes {
   Biome,
@@ -33,7 +35,7 @@ enum MapModes {
 export function WorldMapComponent(props: { graph: Graph }) {
   const containerRef = useRef<HTMLCanvasElement | null>(null);
   const mapRef = useRef<GenMap | BiomeMap>(new GenMap());
-  const [big, setBig] = useState(true);
+  const [big, setBig] = useState(false);
   const nodes = useRef<{
     engine: Engine;
     scene: Scene;
@@ -43,7 +45,7 @@ export function WorldMapComponent(props: { graph: Graph }) {
   const renderState = useRef({ isBig: false, mode: MapModes.WorldGen });
 
   const game = GameComponent.getRequired(props.graph.root);
-  const playerTransform = TransformComponent.getRequired(game.data.player.node);
+  const playerTransform = TransformComponent.getRequired(game.data.activePlayer.node);
   const playerCamera = CameraProviderComponent.getRequiredChild(
     playerTransform.node
   );
@@ -251,18 +253,22 @@ export function WorldMapComponent(props: { graph: Graph }) {
     mapRef.current.init(scene);
 
     let mode = renderState.current.mode;
-
+    const location: LocationData = [
+      "main",
+      playerTransform.schema.position.x,
+      playerTransform.schema.position.y,
+      playerTransform.schema.position.z,
+    ];
     const inte = new SafeInterval(() => {
       //   mapRef.current.updateTiles(["main", 0, 0, 0]);
       //   if (!props.nodes.player?.model?.model) return;
+      location[1] = playerTransform.schema.position.x;
+      location[2] = playerTransform.schema.position.y;
+      location[3] = playerTransform.schema.position.z;
 
-      mapRef.current.updateTiles([
-        "main",
-        playerTransform.schema.position.x,
-        playerTransform.schema.position.y,
-        playerTransform.schema.position.z,
-      ]);
-    }, 500);
+
+      mapRef.current.updateTiles(location);
+    }, 50);
     inte.start();
   }, []);
 

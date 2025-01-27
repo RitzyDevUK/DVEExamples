@@ -1,17 +1,22 @@
 import { LocationData } from "@divinevoxel/vlox/Math";
 import { GenMap } from "./GenMap";
 import { EntityInstance } from "@divinevoxel/vlox-babylon/Tools/EntityInstance";
-import { ColumnDataTool } from "@divinevoxel/vlox/Tools/Data/WorldData/ColumnDataTool";
-import { ColumnState } from "@divinevoxel/vlox/Tasks/IWG/Constants/ColumnState";
+import { ColumnStructIds } from "@divinevoxel/vlox/World/Column/ColumnStructIds";
 import { SafeInterval } from "@amodx/core/Intervals/SafeInterval";
 import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
+import { WorldRegister } from "@divinevoxel/vlox/World/WorldRegister";
+import { Column } from "@divinevoxel/vlox/World/Column";
 export class GenMapTile {
   static Tiles: GenMapTile[] = [];
-  static columnTool = new ColumnDataTool();
 
   _instance: EntityInstance;
+  _dispoed = false;
 
-  constructor(public worldMap: GenMap, public location: LocationData) {
+  constructor(
+    public worldMap: GenMap,
+    public column: Column,
+    public location: LocationData
+  ) {
     const instance = this.worldMap._instanceTool.getInstance();
     if (!instance) {
       console.warn(`Could not load tile instance for ${location}`);
@@ -20,63 +25,61 @@ export class GenMapTile {
     }
     GenMapTile.Tiles.push(this);
     this._instance.position.set(location[1], location[2], location[3]);
+    this._instance.scale.set(1, 1, 1);
     this.update();
   }
 
   update() {
-    if (!GenMapTile.columnTool.loadInAtLocation(this.location)) {
-      this.setColor(1.0, 0.0, 0.0, 1.0); // Red
-      setTimeout(() => {
-        this.dispose();
-      }, 1_000);
+    if (this._dispoed) return;
+
+    Column.StateStruct.setData(this.column.columnState);
+    if (
+      Column.StateStruct.getProperty(ColumnStructIds.isWorldGenDone) &&
+      Column.StateStruct.getProperty(ColumnStructIds.isWorldDecorDone) &&
+      Column.StateStruct.getProperty(ColumnStructIds.isWorldSunDone) &&
+      Column.StateStruct.getProperty(ColumnStructIds.isWorldPropagationDone) &&
+      DivineVoxelEngineRender.instance.meshRegister.column.get(this.location)
+    ) {
+      this.setColor(0.0, 1.0, 0.0); // Green
+      return;
+    }
+    if (Column.StateStruct.getProperty(ColumnStructIds.isWorldSunDone)) {
+      this.setColor(1.0, 1.0, 0.0); // Yellow
       return;
     }
     if (
-      GenMapTile.columnTool.getStructValue(ColumnState.GenDone) &&
-      GenMapTile.columnTool.getStructValue(ColumnState.DecorDone) &&
-      GenMapTile.columnTool.getStructValue(ColumnState.SunDone) &&
-      GenMapTile.columnTool.getStructValue(ColumnState.PropagationDone) &&
-      DivineVoxelEngineRender.instance.meshRegister.column.get(this.location)
+      Column.StateStruct.getProperty(ColumnStructIds.isWorldPropagationDone)
     ) {
-      this.setColor(0.0, 1.0, 0.0, 1.0); // Green
+      this.setColor(0.5, 0.0, 0.5); // Purple
       return;
     }
-    if (GenMapTile.columnTool.getStructValue(ColumnState.PropagationDone)) {
-      this.setColor(0.5, 0.0, 0.5, 1.0); // Purple
+    if (Column.StateStruct.getProperty(ColumnStructIds.isWorldDecorDone)) {
+      this.setColor(0.0, 0.0, 1.0); // Blue
       return;
     }
-    if (GenMapTile.columnTool.getStructValue(ColumnState.SunDone)) {
-      this.setColor(1.0, 1.0, 0.0, 1.0); // Yellow
-      return;
-    }
-    if (GenMapTile.columnTool.getStructValue(ColumnState.DecorDone)) {
-      this.setColor(0.0, 0.0, 1.0, 1.0); // Blue
-      return;
-    }
-    if (GenMapTile.columnTool.getStructValue(ColumnState.GenDone)) {
-      this.setColor(0.0, 1.0, 1.0, 1.0); // Cyan
+    if (Column.StateStruct.getProperty(ColumnStructIds.isWorldGenDone)) {
+      this.setColor(0.0, 1.0, 1.0); // Cyan
       return;
     }
 
-    if (GenMapTile.columnTool.isDirty()) {
-      this.setColor(0.0, 0.0, 1.0, 1.0); // Blue
+    if (Column.StateStruct.getProperty(ColumnStructIds.isDirty)) {
+      this.setColor(0.0, 0.0, 1.0); // Blue
       return;
     }
+    this.setColor(1, 1.0, 1.0);
   }
 
-  setColor(r: number, g: number, b: number, a = 1) {
+  setColor(r: number, g: number, b: number) {
     let index = this._instance.index * 4;
+
     this.worldMap._colorBuffer[index] = r;
     this.worldMap._colorBuffer[index + 1] = g;
     this.worldMap._colorBuffer[index + 2] = b;
-    this.worldMap._colorBuffer[index + 3] = a;
+    this.worldMap._colorBuffer[index + 3] = 1;
   }
   dispose() {
+    this._dispoed = true;
     GenMapTile.Tiles = GenMapTile.Tiles.filter((_) => _ != this);
     this._instance.destroy();
   }
 }
-
-new SafeInterval(() => {
-  GenMapTile.Tiles.forEach((_) => _.update());
-}, 10).start();

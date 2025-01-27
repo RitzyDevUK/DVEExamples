@@ -1,6 +1,5 @@
 import { WorldGenBrush } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGenBrush";
 import { NooiseLayers } from "./NoiseLayers";
-import { DataTool } from "@divinevoxel/vlox/Tools/Data/DataTool";
 import { SubstanceDataTool } from "@divinevoxel/vlox/Tools/Data/SubstanceDataTool";
 
 export class GenNodes {

@@ -63,7 +63,7 @@ export class RiverBiome extends Biome {
           .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
           .isLiquid()) ||
       false;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
       brush
         .setId(this.getLayerVoxel(x, y, z))
@@ -84,12 +84,14 @@ export class RiverBiome extends Biome {
   fill(x: number, y: number, z: number) {
     const { brush } = this.nodes;
     let i = y;
+    brush.setId(Voxels.Water).setLevel(7);
     while (i <= this.nodes.waterHeight) {
       if (y < this.nodes.waterHeight) {
-        brush.setId(Voxels.Water).setXYZ(x, i, z).paint();
+        brush.setXYZ(x, i, z).paint();
       }
       i++;
     }
+    brush.setLevel(0);
   }
   decorate(x: number, y: number, z: number) {
     const brush = this.nodes.brush;
@@ -102,7 +104,7 @@ export class RiverBiome extends Biome {
           .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
           .isLiquid()) ||
       false;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (
       topAir &&
       (voxel == Voxels.Dirt || voxel == Voxels.Sand) &&

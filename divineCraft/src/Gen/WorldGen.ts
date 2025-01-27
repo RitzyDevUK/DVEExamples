@@ -2,14 +2,13 @@ import { WorldGeneration } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGe
 
 import { WorldGenInterface } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGen.types";
 import { GenerateTasks } from "@divinevoxel/vlox/Tasks/Tasks.types";
-import { OverworldWorldGen } from "./OverworldWorldGen";
+
 import { WorldGenBrush } from "@divinevoxel/vlox/Tasks/WorldGeneration/WorldGenBrush";
 import { GenNodes } from "./Classes/GenNodes";
 import { DimensionGenerator } from "./Classes/DimensionGenerator";
 import RegisterAllBiomes from "./Register/RegisterAllBiomes";
 import { OverWorldGenData } from "./Dimensions/OverWorld";
 import { NooiseLayers } from "./Classes/NoiseLayers";
-import { DataTool } from "@divinevoxel/vlox/Tools/Data/DataTool";
 import { Threads } from "@amodx/threads";
 import { Vec3Array } from "@amodx/math";
 import { Trees } from "./Register/Biomes/Tree";
@@ -18,8 +17,6 @@ import { Caves } from "./Register/Biomes/Caves";
 import { SubstanceDataTool } from "@divinevoxel/vlox/Tools/Data/SubstanceDataTool";
 
 const brush = new WorldGenBrush();
-const overWorld = new OverworldWorldGen();
-const dataTool = new DataTool();
 let clearTimer: any;
 export class WorldGen implements WorldGenInterface {
   static instance: WorldGen;
@@ -81,15 +78,10 @@ export class WorldGen implements WorldGenInterface {
   }
 }
 export type GetBiomeImageTasks = [start: Vec3Array, end: Vec3Array];
-Threads.registerTasks<GetBiomeImageTasks>(
-  "get-biome-image",
-  ([start, end], onDone) => {
-    const image = WorldGen.instance.overWorldGen.generateBiomeTypeImage(
-      start,
-      end
-    );
-    if (onDone) return onDone(image, [image.buffer]);
-    return image;
-  },
-  "async"
-);
+Threads.registerTask<GetBiomeImageTasks>("get-biome-image", ([start, end]) => {
+  const image = WorldGen.instance.overWorldGen.generateBiomeTypeImage(
+    start,
+    end
+  );
+  return [image, [image.buffer]];
+});

@@ -60,7 +60,7 @@ export class SpruceForestBiome extends Biome {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
 
     if (topAir && voxel == Voxels.Stone!) {
       brush
@@ -85,7 +85,7 @@ export class SpruceForestBiome extends Biome {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && (voxel == Voxels.Podzol || voxel == Voxels.GrassBlock)) {
       const value = Math.random();
 

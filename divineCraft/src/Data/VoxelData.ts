@@ -683,6 +683,35 @@ export const voxelData: VoxelData[] = [
       dve_collider_id: "dve_cube",
       dve_check_collisions: true,
       dve_voxel_material: "wood",
+      dve_named_states: [
+        {
+          id: "dc_birch_log",
+          name: "Birch Log",
+          mod: "*",
+          state: "*",
+          properties: {},
+          display: {
+            type: "model",
+            mod: "*",
+            state: "*",
+          },
+        },
+      ],
+      dve_model_data: {
+        id: "dve_oriented_cube",
+        modRelationSchema: [],
+        inputs: {
+          "*": {
+            "@upTex": ["dve_voxel", "dc_birch_log", "top"],
+            "@downTex": ["dve_voxel", "dc_birch_log", "top"],
+            "@northTex": ["dve_voxel", "dc_birch_log"],
+            "@southTex": ["dve_voxel", "dc_birch_log"],
+            "@eastTex": ["dve_voxel", "dc_birch_log"],
+            "@westTex": ["dve_voxel", "dc_birch_log"],
+          },
+        },
+      },
+      
     },
   },
   {

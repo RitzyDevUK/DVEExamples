@@ -13,13 +13,21 @@ import { FirstPersonCameraComponent } from "@dvegames/vlox/Babylon/Components/Ca
 import { PlayerComponent } from "./Components/Player.component";
 import { Controls, KeyDownEvent } from "@amodx/controls";
 import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
+import { PlayerControlsComponent } from "./Components/PlayerControls.component";
+import { PlayerInventoryComponent } from "./Components/PlayerInventory.component";
+import { PlayerHandsComponent } from "./Components/PlayerHands.component";
+import { PlayerToolsComponent } from "./Components/PlayerTools.component";
+import { VoxelInersectionComponent } from "@dvegames/vlox/Core/Components/Voxels/Interaction/VoxelIntersection.component";
+import { VoxelPlacerComponent } from "@dvegames/vlox/Core/Components/Voxels/Interaction/VoxelPlacer.component";
+import { VoxelRemoverComponent } from "@dvegames/vlox/Core/Components/Voxels/Interaction/VoxelRemover.component";
+import { CrossHairsComponent } from "@dvegames/vlox/Babylon/Components/Interaction/CrossHairs.component";
+import { CameraDirectionComponent } from "@dvegames/vlox/Babylon/Components/Cameras/CameraDirection.component";
 export default async function (dver: DivineVoxelEngineRender, graph: Graph) {
   const playerNode = graph
     .addNode(
       Node(
         "Player",
         [
-          PlayerComponent(),
           DimensionProviderComponent(),
           TransformComponent(
             {
@@ -46,126 +54,35 @@ export default async function (dver: DivineVoxelEngineRender, graph: Graph) {
           //    BoxColliderMeshComponent(),
           NexusPhysicsLinkComponent(),
           PlayerControllerComponent(),
+          VoxelInersectionComponent(),
+          VoxelPlacerComponent(),
+          VoxelRemoverComponent(),
         ],
         Node({}, [
           TransformComponent({
             position: { x: 0, y: 1.8 / 2, z: 0 },
           }),
+          TransformNodeComponent(),
           CameraProviderComponent(),
           FirstPersonCameraComponent(),
+          CrossHairsComponent(),
+          CameraDirectionComponent(),
         ])
       )
     )
     .cloneCursor();
-  const controller = PlayerControllerComponent.get(playerNode)!;
-  const camera = CameraProviderComponent.getChild(playerNode)!;
 
-  Controls.registerControls([
-    {
-      id: "main",
-      name: "main",
-      controls: [
-        {
-          id: "move_forward",
-          groupId: "main",
-          name: "Move Forward",
-          input: {
-            keyboard: {
-              key: "w",
-              mode: "down",
-            },
-          },
-          action: (event) => {
-            controller.data.controlObservers.moveForward.notify();
-            (event as KeyDownEvent).observers.onRelease.subscribeOnce(() => {
-              controller.data.controlObservers.moveForwardKeyUp.notify();
-            });
-          },
-        },
-        {
-          id: "move_backward",
-          groupId: "main",
-          name: "Move Backward",
-          input: {
-            keyboard: {
-              key: "s",
-              mode: "down",
-            },
-          },
-          action: (event) => {
-            controller.data.controlObservers.moveBackward.notify();
-            (event as KeyDownEvent).observers.onRelease.subscribeOnce(() => {
-              controller.data.controlObservers.moveBackwardKeyUp.notify();
-            });
-          },
-        },
-        {
-          id: "move_left",
-          groupId: "main",
-          name: "Move Left",
-          input: {
-            keyboard: {
-              key: "a",
-              mode: "down",
-            },
-          },
-          action: (event) => {
-            controller.data.controlObservers.moveLeft.notify();
-            (event as KeyDownEvent).observers.onRelease.subscribeOnce(() => {
-              controller.data.controlObservers.moveLeftKeyUp.notify();
-            });
-          },
-        },
-        {
-          id: "move_right",
-          groupId: "main",
-          name: "Move Right",
-          input: {
-            keyboard: {
-              key: "d",
-              mode: "down",
-            },
-          },
-          action: (event) => {
-            controller.data.controlObservers.moveRight.notify();
-            (event as KeyDownEvent).observers.onRelease.subscribeOnce(() => {
-              controller.data.controlObservers.moveRightKeyUp.notify();
-            });
-          },
-        },
-        {
-          id: "jump",
-          groupId: "main",
-          name: "Jump",
-          input: {
-            keyboard: {
-              key: " ",
-              mode: "down",
-            },
-          },
-          action: (event) => {
-            controller.data.controlObservers.jump.notify();
-          },
-        },
-        {
-          id: "run",
-          groupId: "main",
-          name: "Run",
-          input: {
-            keyboard: {
-              key: "Shift",
-              mode: "down",
-            },
-          },
-          action: (event) => {
-            controller.data.controlObservers.run.notify();
-          },
-        },
-      ],
-    },
-  ]).init();
+  const camera = FirstPersonCameraComponent.getRequiredChild(playerNode);
+  const subNode = TransformNodeComponent.getRequired(camera.node);
+  subNode.data.transformNode.parent = camera.data.camera;
 
-  await dver.threads.world.runAsyncTasks(
+  PlayerToolsComponent.set(playerNode);
+  PlayerInventoryComponent.set(playerNode);
+  PlayerHandsComponent.set(playerNode);
+  PlayerControlsComponent.set(playerNode);
+  PlayerComponent.set(playerNode);
+
+  await dver.threads.world.runTaskAsync(
     "create-player",
     NCS.createRemoteNode(playerNode, false, [TransformComponent])
   );

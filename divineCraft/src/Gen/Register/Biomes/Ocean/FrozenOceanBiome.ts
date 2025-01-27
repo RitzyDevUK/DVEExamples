@@ -35,7 +35,6 @@ export class FrozenOceanBiome extends Biome {
     return this.nodes.waterHeight;
   }
   getHeight(x: number, y: number, z: number): number {
-
     let height =
       this.nodes.minHeight -
       ((1 +
@@ -53,11 +52,14 @@ export class FrozenOceanBiome extends Biome {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topVoxel = dataTool.getVoxel(x, y + 1, z);
-    const topAir = topVoxel?.isAir() || topVoxel?.isRenderable() &&
-    this.nodes.substanceTool
-      .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-      .isLiquid() || false;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const topAir =
+      topVoxel?.isAir() ||
+      (topVoxel?.isRenderable() &&
+        this.nodes.substanceTool
+          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
+          .isLiquid()) ||
+      false;
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
       brush.setData(VoxelData[Voxels.Dirt]).setXYZ(x, y, z).paint();
       let i = 5;
@@ -73,7 +75,7 @@ export class FrozenOceanBiome extends Biome {
   }
   fill(x: number, y: number, z: number) {
     const { brush } = this.nodes;
- 
+
     if (Math.random() > 0.8)
       brush
         .setId(Voxels.Ice)
@@ -82,22 +84,27 @@ export class FrozenOceanBiome extends Biome {
 
     brush.setId(Voxels.Ice).setXYZ(x, this.nodes.waterHeight, z).paint();
     let i = y;
+    brush.setId(Voxels.Water).setLevel(7);
     while (i <= this.nodes.waterHeight - 1) {
       if (y < this.nodes.waterHeight - 1) {
-        brush.setId(Voxels.Water).setXYZ(x, i, z).paint();
+        brush.setXYZ(x, i, z).paint();
       }
       i++;
     }
+    brush.setLevel(0);
   }
   decorate(x: number, y: number, z: number) {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topVoxel = dataTool.getVoxel(x, y + 1, z);
-    const topAir = topVoxel?.isAir() || topVoxel?.isRenderable() &&
-    this.nodes.substanceTool
-      .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-      .isLiquid() || false;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const topAir =
+      topVoxel?.isAir() ||
+      (topVoxel?.isRenderable() &&
+        this.nodes.substanceTool
+          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
+          .isLiquid()) ||
+      false;
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && (voxel == Voxels.Dirt || voxel == Voxels.Sand)) {
       const value = Math.random();
 

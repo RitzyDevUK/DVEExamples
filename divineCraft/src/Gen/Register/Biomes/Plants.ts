@@ -36,7 +36,6 @@ const randomCoral: RandomWeights<Voxels> = [
   [Voxels.BubbleCoral, 10],
 ];
 
-
 const waterPlant: RandomWeights<Voxels> = [[Voxels.SeaGrass, 10]];
 export class Plants {
   static generateCactus(nodes: GenNodes, x: number, y: number, z: number) {
@@ -65,17 +64,24 @@ export class Plants {
     ) {
       brush
         .setId(Voxels.Water)
+        .setLevel(7)
         .setSecondaryId(Voxels.Kelp)
         .setXYZ(x, dy, z)
         .paint();
     }
-
+    brush.setLevel(0);
     brush.setSecondaryId("");
   }
   static generateWaterPlant(nodes: GenNodes, x: number, y: number, z: number) {
     const { brush } = nodes;
     const voxel = WeightedRandom.getValue(waterPlant);
-    brush.setId(Voxels.Water).setSecondaryId(voxel).setXYZ(x, y, z).paint();
+    brush
+      .setId(Voxels.Water)
+      .setLevel(7)
+      .setSecondaryId(voxel)
+      .setXYZ(x, y, z)
+      .paint();
+    brush.setLevel(0);
 
     brush.setSecondaryId("");
   }
@@ -106,15 +112,16 @@ export class Plants {
     const voxel = WeightedRandom.getValue(randomDeadCoral);
     brush.setId(voxel).setXYZ(x, y, z).paint();
   }
-  static generateRandomCoral(
-    nodes: GenNodes,
-    x: number,
-    y: number,
-    z: number
-  ) {
+  static generateRandomCoral(nodes: GenNodes, x: number, y: number, z: number) {
     const { brush } = nodes;
     const voxel = WeightedRandom.getValue(randomCoral);
-    brush.setId(Voxels.Water).setSecondaryId(voxel).setXYZ(x, y, z).paint();
+    brush
+      .setId(Voxels.Water)
+      .setLevel(7)
+      .setSecondaryId(voxel)
+      .setXYZ(x, y, z)
+      .paint();
+    brush.setLevel(0);
     brush.setSecondaryId("");
   }
 }

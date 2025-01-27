@@ -47,7 +47,7 @@ getHeight(x: number, y: number, z: number): number {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.Stone) {
       brush.setData(VoxelData[Voxels.Sand]).setXYZ(x, y, z).paint();
       let i = 5;
@@ -68,7 +68,7 @@ getHeight(x: number, y: number, z: number): number {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
 
     if (topAir && voxel == Voxels.Sand) {
       const value = Math.random();

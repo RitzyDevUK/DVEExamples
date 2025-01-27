@@ -46,7 +46,7 @@ export class RiverBankBiome extends Biome {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.Stone) {
       brush
         .setId(this.getFillVoxel(x, y, z, true))
@@ -99,7 +99,7 @@ export class RiverBankBiome extends Biome {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topAir = dataTool.getVoxel(x, y + 1, z)?.isAir() || true;
-    const voxel = dataTool.getVoxel(x, y, z)!.getStringId();
+    const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.GrassBlock) {
       const value = Math.random();
 
