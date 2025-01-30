@@ -1,7 +1,7 @@
 import { BiomeMapTilesRegister } from "./BiomeMapTilesRegister";
 import { Scene, Mesh, VertexBuffer, ShaderMaterial } from "@babylonjs/core";
 import { LocationData } from "@divinevoxel/vlox/Math";
-import { $2dMooreNeighborhood } from "@divinevoxel/vlox/Math/Constants/CardinalNeighbors.js";
+import { $2dMooreNeighborhood } from "@divinevoxel/vlox/Math/CardinalNeighbors.js";
 import { Distance3D, Vec3Array } from "@amodx/math";
 import { Quad } from "../Quad";
 const alignToPowerOf2 = (value: number, powerOf2: number) => {

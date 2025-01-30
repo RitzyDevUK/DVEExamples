@@ -3,7 +3,7 @@ import { LocationData } from "@divinevoxel/vlox/Math";
 import { WorldSpaces } from "@divinevoxel/vlox/World/WorldSpaces";
 import { GenMapTile } from "./GenMapTile";
 import { GenMap } from "./GenMap";
-import { Column } from "@divinevoxel/vlox/World/Column";
+import { Sector } from "@divinevoxel/vlox/World/Sector";
 
 export type WorldMapTilesRegisterColumn = {
   location: LocationData;
@@ -11,7 +11,7 @@ export type WorldMapTilesRegisterColumn = {
 };
 
 export type WorldMapTileRegisterDimensions = {
-  columns: Map<string, GenMapTile>;
+  sectors: Map<string, GenMapTile>;
 };
 
 export class GenMapTilesRegister {
@@ -19,7 +19,7 @@ export class GenMapTilesRegister {
 
   constructor(public worldMap: GenMap) {
     this._dimensions.set("main", {
-      columns: new Map(),
+      sectors: new Map(),
     });
   }
 
@@ -28,7 +28,7 @@ export class GenMapTilesRegister {
       this.dimensions.remove(dkey);
     }
     this._dimensions.set("main", {
-      columns: new Map(),
+      sectors: new Map(),
     });
   }
 
@@ -36,7 +36,7 @@ export class GenMapTilesRegister {
     add: (id: string) => {
       const dimesnion = new Map();
       this._dimensions.set(id, {
-        columns: new Map(),
+        sectors: new Map(),
       });
       return dimesnion;
     },
@@ -46,7 +46,7 @@ export class GenMapTilesRegister {
     remove: (id: string) => {
       const dimension = this._dimensions.get(id);
       if (!dimension) return false;
-      dimension.columns.forEach((column) => {
+      dimension.sectors.forEach((column) => {
         column.dispose();
       });
       this._dimensions.delete(id);
@@ -54,23 +54,23 @@ export class GenMapTilesRegister {
     },
   };
 
-  column = {
-    add: (location: LocationData,column:Column) => {
+  sectors = {
+    add: (location: LocationData, column: Sector) => {
       const dimension = this.dimensions.get(location[0])!;
       const columnLocation: LocationData = [
         location[0],
-        ...Vector3Like.ToArray(
-          WorldSpaces.column.getPositionXYZ(
-            location[1],
-            location[2],
-            location[3]
-          )
+        ...WorldSpaces.sector.getPositionVec3Array(
+          location[1],
+          location[2],
+          location[3]
         ),
       ] as LocationData;
 
-      const tile = new GenMapTile(this.worldMap, column,columnLocation);
-      dimension.columns.set(
-        WorldSpaces.column.getKeyXYZ(location[1], location[2], location[3]),
+      const tile = new GenMapTile(this.worldMap, column, columnLocation);
+      dimension.sectors.set(
+        WorldSpaces.hash.hashVec3(
+          WorldSpaces.sector.getPosition(location[1], location[2], location[3])
+        ),
         tile
       );
       return tile;
@@ -78,27 +78,26 @@ export class GenMapTilesRegister {
     remove: (location: LocationData) => {
       const dimension = this.dimensions.get(location[0])!;
 
-      const columnKey = WorldSpaces.column.getKeyXYZ(
-        location[1],
-        location[2],
-        location[3]
+      const sectorKey = WorldSpaces.hash.hashVec3(
+        WorldSpaces.sector.getPosition(location[1], location[2], location[3])
       );
-
-      const column = dimension.columns.get(columnKey);
-      if (!column) return false;
-      column.dispose();
-      dimension.columns.delete(columnKey);
-      if (dimension.columns.size == 0) {
+      const sector = dimension.sectors.get(sectorKey);
+      if (!sector) return false;
+      sector.dispose();
+      dimension.sectors.delete(sectorKey);
+      if (dimension.sectors.size == 0) {
         //  dimension.remove(location);
       }
-      return column;
+      return sector;
     },
     get: (location: LocationData) => {
       const dimension = this.dimensions.get(location[0])!;
 
       if (!dimension) return false;
-      return dimension.columns.get(
-        WorldSpaces.column.getKeyXYZ(location[1], location[2], location[3])
+      return dimension.sectors.get(
+        WorldSpaces.hash.hashVec3(
+          WorldSpaces.sector.getPosition(location[1], location[2], location[3])
+        )
       );
     },
   };

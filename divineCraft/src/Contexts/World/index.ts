@@ -1,5 +1,5 @@
 import { StartWorld } from "@divinevoxel/vlox/Init/StartWorld";
-import { IWG, InitalLoad } from "@divinevoxel/vlox/Tasks/IWG/";
+import { IWG } from "@divinevoxel/vlox/Tasks/IWG/";
 import { SafeInterval } from "@amodx/core/Intervals/SafeInterval";
 import { CreateNodeData, NCS, NodeCursor } from "@amodx/ncs";
 import { TransformComponent } from "@dvegames/vlox/Core/Components/Base/Transform.component";
@@ -7,14 +7,14 @@ import { WorldStorage } from "./Storage";
 import { Threads } from "@amodx/threads";
 import RegisterCoreTasksWorld from "@dvegames/vlox/Core/Tasks/World/RegisterTasksWorld";
 
-const worldStorage = new WorldStorage();
+//const worldStorage = new WorldStorage();
 const DVEW = await StartWorld({
-  worldStorage,
+ // worldStorage,
 });
 RegisterCoreTasksWorld(DVEW);
-await worldStorage.init("divine-craft", DVEW.threads.constructors);
+//await worldStorage.init("divine-craft", DVEW.threads.constructors);
 IWG.init({
-  worldStorage,
+ // worldStorage,
   parent: DVEW.threads.parent,
   threads: DVEW.threads.constructors,
 });
@@ -27,7 +27,7 @@ Threads.registerTask<CreateNodeData>("create-player", async (data) => {
 Threads.registerTask("start-world", async () => {
   if (!player) throw new Error(`Player not created yet`);
   const position = TransformComponent.getRequired(player).schema.position;
-  await InitalLoad({
+  await IWG.Procedures.InitalLoad({
     dimension: "main",
     logTasks: true,
     genData: {

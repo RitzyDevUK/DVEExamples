@@ -137,7 +137,6 @@ export const PlayerControlsComponent = NCS.registerComponent<Data>({
               },
             },
             action: (event) => {
-              console.warn("use hand item", controls.menuOpen);
               if (controls.menuOpen) return;
               tools.data.toolComponents[ToolIds.Hands].node.events.dispatch(
                 UseItemEvent.Event,
@@ -161,11 +160,11 @@ export const PlayerControlsComponent = NCS.registerComponent<Data>({
             },
             action: (event) => {
               if (controls.menuOpen) return;
-              tools.data.toolComponents[ToolIds.Hammer].node.events.dispatch(
+              tools.data.toolComponents[ToolIds.Hands].node.events.dispatch(
                 UseItemEvent.Event,
                 new UseItemEvent(
                   tools.node,
-                  tools.data.toolComponents[ToolIds.Hammer].node,
+                  tools.data.toolComponents[ToolIds.Hands].node,
                   "secondary"
                 )
               );

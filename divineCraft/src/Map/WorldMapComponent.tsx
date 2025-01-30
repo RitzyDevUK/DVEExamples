@@ -33,7 +33,7 @@ enum MapModes {
 }
 
 export function WorldMapComponent(props: { graph: Graph }) {
-  const containerRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mapRef = useRef<GenMap | BiomeMap>(new GenMap());
   const [big, setBig] = useState(false);
   const nodes = useRef<{
@@ -51,9 +51,9 @@ export function WorldMapComponent(props: { graph: Graph }) {
   );
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!canvasRef.current) return;
 
-    const engine = new Engine(containerRef.current);
+    const engine = new Engine(canvasRef.current);
     const scene = new Scene(engine);
     const camera = new ArcRotateCamera(
       "",
@@ -187,7 +187,7 @@ export function WorldMapComponent(props: { graph: Graph }) {
 
     const resized = new ResizeObserver(() => {
       const { width, height } =
-        containerRef.current!.parentElement!.getBoundingClientRect();
+        canvasRef.current!.parentElement!.getBoundingClientRect();
       if (width != lastWidth || height != lastHeight) {
         engine.setSize(width, height);
 
@@ -199,7 +199,7 @@ export function WorldMapComponent(props: { graph: Graph }) {
     const startRotation = camera.rotation.clone();
     const startAlpha = camera.alpha;
     const startBeta = camera.beta;
-    resized.observe(containerRef.current!);
+    resized.observe(canvasRef.current!);
     engine.runRenderLoop(() => {
       if (!renderState.current.isBig) {
         const playerPosition = playerTransform.schema.position;
@@ -329,7 +329,7 @@ export function WorldMapComponent(props: { graph: Graph }) {
           </div>
         )}
         <canvas
-          ref={containerRef}
+          ref={canvasRef}
           style={{
             width: "100%",
             height: "100%",

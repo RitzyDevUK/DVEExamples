@@ -10,7 +10,7 @@ import {
 } from "@babylonjs/core";
 import { LocationData } from "@divinevoxel/vlox/Math";
 import { WorldSpaces } from "@divinevoxel/vlox/World/WorldSpaces";
-import { $2dMooreNeighborhood } from "@divinevoxel/vlox/Math/Constants/CardinalNeighbors.js";
+import { $2dMooreNeighborhood } from "@divinevoxel/vlox/Math/CardinalNeighbors.js";
 import { Distance3D, Vec3Array, Vector3Like } from "@amodx/math";
 import { GenMapTileMaterial } from "./GenMapTileMaterial";
 import { WorldRegister } from "@divinevoxel/vlox/World/WorldRegister";
@@ -68,8 +68,10 @@ export class GenMap {
       this._previousLocation = [...location];
     }
 
-    const worldColumnPOS = Vector3Like.Clone(
-      WorldSpaces.column.getPositionXYZ(location[1], 0, location[3])
+    const worldColumnPOS = WorldSpaces.sector.getPosition(
+      location[1],
+      0,
+      location[3]
     );
 
     this._searchQueue.push(
@@ -83,10 +85,10 @@ export class GenMap {
       const cy = this._searchQueue.shift()!;
       const cz = this._searchQueue.shift()!;
 
-      const columnKey = WorldSpaces.column.getKeyXYZ(cx, 0, cz);
+      const sectorKey = WorldSpaces.hash.hashXYZ(cx, 0, cz);
 
-      if (this._visitedMap.has(columnKey)) continue;
-      this._visitedMap.set(columnKey, true);
+      if (this._visitedMap.has(sectorKey)) continue;
+      this._visitedMap.set(sectorKey, true);
 
       const distance = Distance3D(
         worldColumnPOS.x,
@@ -99,27 +101,31 @@ export class GenMap {
       if (distance > 600) continue;
 
       for (const n of $2dMooreNeighborhood) {
-        const nx = cx + n[0] * WorldSpaces.column.bounds.x;
-        const nz = cz + n[1] * WorldSpaces.column.bounds.z;
-        const columnPOS = WorldSpaces.column.getPositionXYZ(nx, cy, nz),
-          key = WorldSpaces.column.getKey();
+        const nx = cx + n[0] * WorldSpaces.sector.bounds.x;
+        const nz = cz + n[1] * WorldSpaces.sector.bounds.z;
+        const columnPOS = WorldSpaces.sector.getPosition(nx, cy, nz);
+        const key = WorldSpaces.hash.hashXYZ(
+          columnPOS.x,
+          columnPOS.y,
+          columnPOS.z
+        );
         if (!this._visitedMap.has(key)) {
           this._searchQueue.push(columnPOS.x, cy, columnPOS.z);
         }
       }
 
-      const columnLocation: LocationData = [location[0], cx, 0, cz];
-      WorldRegister.setDimension(columnLocation[0]);
-      const column = WorldRegister.column.get(
-        columnLocation[1],
-        columnLocation[2],
-        columnLocation[3]
+      const sectorLocation: LocationData = [location[0], cx, 0, cz];
+      WorldRegister.setDimension(sectorLocation[0]);
+      const sector = WorldRegister.sectors.get(
+        sectorLocation[1],
+        sectorLocation[2],
+        sectorLocation[3]
       );
-      if (!column) {
-        this.tilesRegister.column.remove(columnLocation);
+      if (!sector) {
+        this.tilesRegister.sectors.remove(sectorLocation);
       } else {
-        if (!this.tilesRegister.column.get(columnLocation)) {
-          this.tilesRegister.column.add(columnLocation, column);
+        if (!this.tilesRegister.sectors.get(sectorLocation)) {
+          this.tilesRegister.sectors.add(sectorLocation, sector);
         }
       }
     }

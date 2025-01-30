@@ -5,6 +5,7 @@ import { DVEBRMesh } from "@divinevoxel/vlox-babylon/Meshes/DVEBRMesh";
 import { VoxelModelIndex } from "@divinevoxel/vlox/Voxels/Indexes/VoxelModelIndex";
 import { BabylonContext } from "@dvegames/vlox/Babylon/Contexts/Babylon.context";
 import { TransformNodeComponent } from "@dvegames/vlox/Babylon/Components/Base/TransformNode.component";
+import { CompactSubMesh } from "@divinevoxel/vlox/Mesher/Types/Mesher.types";
 export const VoxelModelComponent = NCS.registerComponent({
   type: "voxel-model",
   schema: NCS.schema({
@@ -38,10 +39,11 @@ export const VoxelModelComponent = NCS.registerComponent({
     DVEBRMesh.UpdateVertexData(
       mesh,
       scene.getEngine()! as any,
-      model.model[2][0] as any
+      (model.model[1] as CompactSubMesh[])[0]
     );
 
-    mesh.renderingGroupId =1;
+    mesh.isPickable = false;
+    mesh.renderingGroupId = 1;
     mesh.material = material;
     component.data = { mesh };
     console.warn("making mesh", transformNode);

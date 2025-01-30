@@ -6,7 +6,7 @@ import { WorldSpaces } from "@divinevoxel/vlox/World/WorldSpaces";
 import { WorldRegister } from "@divinevoxel/vlox/World/WorldRegister";
 
 const getKey = (location: LocationData) => {
-  const pos = WorldSpaces.column.getPositionXYZ(
+  const pos = WorldSpaces.sector.getPosition(
     location[1],
     location[2],
     location[3]
@@ -15,7 +15,7 @@ const getKey = (location: LocationData) => {
 };
 export class WorldStorage implements WorldStorageInterface {
   _dataBase: DataBase;
-  _columns: ObjectStore<any>;
+  _sectors: ObjectStore<any>;
   _threads: ThreadPool;
 
   async init(databaseName: string, threads: ThreadPool) {
@@ -25,7 +25,7 @@ export class WorldStorage implements WorldStorageInterface {
       databaseName,
       objectStores: [
         {
-          name: "columns",
+          name: "sectors",
           schema: [],
         },
       ],
@@ -33,30 +33,40 @@ export class WorldStorage implements WorldStorageInterface {
     this._threads = threads;
     this._dataBase = dataBase;
     console.log("done with init index db");
-    this._columns = await this._dataBase.getObjectStore("columns");
-    console.log("got columns", this._columns);
+    this._sectors = await this._dataBase.getObjectStore("sectors");
+    console.log("got columns", this._sectors);
   }
 
-  async saveColumn(location: LocationData): Promise<void> {
+  async saveSector(location: LocationData): Promise<void> {
+    WorldRegister.setDimension(location[0]);
+    const sector = WorldRegister.sectors.get(
+      location[1],
+      location[2],
+      location[3]
+    );
+    if (!sector)
+      throw new Error(
+        `Could not save sector that does not exist at ${location.toString()}`
+      );
     const columnData = await this._threads.runTaskAsync(
-      "archive-column-binary",
+      "archive-sector-binary",
       location
     );
-    this._columns.set(getKey(location), columnData);
+    this._sectors.set(getKey(location), columnData);
   }
-  async loadColumn(location: LocationData): Promise<boolean> {
+  async loadSector(location: LocationData): Promise<boolean> {
     const columnKey = getKey(location);
-    const columnData = await this._columns.get(columnKey);
+    const columnData = await this._sectors.get(columnKey);
     if (!columnData) return false;
-    await this._threads.runTaskAsync("import-column-binary", [
+    await this._threads.runTaskAsync("import-sector-binary", [
       location,
       columnData,
     ]);
     return true;
   }
-  async unloadColumn(location: LocationData): Promise<void> {
-    await this.saveColumn(location);
+  async unloadSector(location: LocationData): Promise<void> {
+    await this.saveSector(location);
     WorldRegister.setDimension(location[0]);
-    WorldRegister.column.remove(location[1], location[2], location[3]);
+    WorldRegister.sectors.remove(location[1], location[2], location[3]);
   }
 }

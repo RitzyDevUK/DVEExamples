@@ -6,7 +6,9 @@ import { GameComponent } from "Game.component";
 
 export function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [game, setGraph] = useState<typeof GameComponent["default"] | null>(null);
+  const [game, setGraph] = useState<(typeof GameComponent)["default"] | null>(
+    null
+  );
 
   useEffect(() => {
     (async () => {
@@ -26,8 +28,8 @@ export function App() {
         overflow: "hidden",
       }}
     >
-      {game && <WorldMapComponent graph={game.node.graph} />}
-      {game && <UI gameRoot={game.node}/>}
+{/*       {game && <WorldMapComponent graph={game.node.graph} />} */}
+      {game && <UI gameRoot={game.node} />}
       <canvas
         style={{
           width: "100%",

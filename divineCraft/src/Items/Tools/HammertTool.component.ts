@@ -6,6 +6,10 @@ import {
 import { NCS } from "@amodx/ncs/";
 import { VoxelRemoverComponent } from "@dvegames/vlox/Core/Components/Voxels/Interaction/VoxelRemover.component";
 import { PlayerControlsComponent } from "Player/Components/PlayerControls.component";
+import { RendererContext } from "@dvegames/vlox/Core/Contexts/Renderer.context";
+import { TaskTool } from "@divinevoxel/vlox/Tools/Tasks/TasksTool";
+import { AdvancedBrush } from "@divinevoxel/vlox/Tools/Brush/AdvancedBrushTool";
+
 export const HammerToolComponent = NCS.registerComponent({
   type: "hammer-tool",
   schema: NCS.schema({
@@ -14,11 +18,12 @@ export const HammerToolComponent = NCS.registerComponent({
   }),
   data: NCS.data<() => void>(),
   init(component) {
+    const { dve } = RendererContext.getRequired(component.node).data;
+    const brush = new AdvancedBrush(new TaskTool(dve.threads.construcotrs));
     const useListener = (event: UseItemEvent) => {
-      const remover = VoxelRemoverComponent.getRequired(event.origin);
       const controls = PlayerControlsComponent.getRequired(event.origin);
       const { pickedPosition } = controls.data.pick();
-      remover.data.removeSingle(pickedPosition);
+      brush.setXYZ(...pickedPosition).eraseAndAwaitUpdate();
     };
 
     component.node.events.addListener(ItemEvents.Use, useListener);

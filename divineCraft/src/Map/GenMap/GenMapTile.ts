@@ -1,11 +1,11 @@
 import { LocationData } from "@divinevoxel/vlox/Math";
 import { GenMap } from "./GenMap";
 import { EntityInstance } from "@divinevoxel/vlox-babylon/Tools/EntityInstance";
-import { ColumnStructIds } from "@divinevoxel/vlox/World/Column/ColumnStructIds";
+import { SectorStateStructIds } from "@divinevoxel/vlox/World/Sector/SectorStructIds";
 import { SafeInterval } from "@amodx/core/Intervals/SafeInterval";
 import { DivineVoxelEngineRender } from "@divinevoxel/vlox/Contexts/Render";
 import { WorldRegister } from "@divinevoxel/vlox/World/WorldRegister";
-import { Column } from "@divinevoxel/vlox/World/Column";
+import { Sector } from "@divinevoxel/vlox/World";
 export class GenMapTile {
   static Tiles: GenMapTile[] = [];
 
@@ -14,7 +14,7 @@ export class GenMapTile {
 
   constructor(
     public worldMap: GenMap,
-    public column: Column,
+    public sector: Sector,
     public location: LocationData
   ) {
     const instance = this.worldMap._instanceTool.getInstance();
@@ -32,37 +32,37 @@ export class GenMapTile {
   update() {
     if (this._dispoed) return;
 
-    Column.StateStruct.setData(this.column.columnState);
+    Sector.StateStruct.setData(this.sector.sectorState);
     if (
-      Column.StateStruct.getProperty(ColumnStructIds.isWorldGenDone) &&
-      Column.StateStruct.getProperty(ColumnStructIds.isWorldDecorDone) &&
-      Column.StateStruct.getProperty(ColumnStructIds.isWorldSunDone) &&
-      Column.StateStruct.getProperty(ColumnStructIds.isWorldPropagationDone) &&
-      DivineVoxelEngineRender.instance.meshRegister.column.get(this.location)
+      Sector.StateStruct.getProperty(SectorStateStructIds.isWorldGenDone) &&
+      Sector.StateStruct.getProperty(SectorStateStructIds.isWorldDecorDone) &&
+      Sector.StateStruct.getProperty(SectorStateStructIds.isWorldSunDone) &&
+      Sector.StateStruct.getProperty(SectorStateStructIds.isWorldPropagationDone) &&
+      DivineVoxelEngineRender.instance.meshRegister.sectors.get(this.location)
     ) {
       this.setColor(0.0, 1.0, 0.0); // Green
       return;
     }
-    if (Column.StateStruct.getProperty(ColumnStructIds.isWorldSunDone)) {
+    if (Sector.StateStruct.getProperty(SectorStateStructIds.isWorldSunDone)) {
       this.setColor(1.0, 1.0, 0.0); // Yellow
       return;
     }
     if (
-      Column.StateStruct.getProperty(ColumnStructIds.isWorldPropagationDone)
+      Sector.StateStruct.getProperty(SectorStateStructIds.isWorldPropagationDone)
     ) {
       this.setColor(0.5, 0.0, 0.5); // Purple
       return;
     }
-    if (Column.StateStruct.getProperty(ColumnStructIds.isWorldDecorDone)) {
+    if (Sector.StateStruct.getProperty(SectorStateStructIds.isWorldDecorDone)) {
       this.setColor(0.0, 0.0, 1.0); // Blue
       return;
     }
-    if (Column.StateStruct.getProperty(ColumnStructIds.isWorldGenDone)) {
+    if (Sector.StateStruct.getProperty(SectorStateStructIds.isWorldGenDone)) {
       this.setColor(0.0, 1.0, 1.0); // Cyan
       return;
     }
 
-    if (Column.StateStruct.getProperty(ColumnStructIds.isDirty)) {
+    if (Sector.StateStruct.getProperty(SectorStateStructIds.isDirty)) {
       this.setColor(0.0, 0.0, 1.0); // Blue
       return;
     }

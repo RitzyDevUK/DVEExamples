@@ -16,7 +16,7 @@ import { UIScreensIds } from "Game.types";
 import { ScreenComponent } from "Screens/Screen.component";
 import { CreateItemManager } from "Items";
 import CreateDisplayIndex from "@divinevoxel/vlox-babylon/Init/CreateDisplayIndex";
-
+import { RendererContext } from "@dvegames/vlox/Core/Contexts/Renderer.context";
 const worldWorker = new Worker(new URL("./Contexts/World/", import.meta.url), {
   type: "module",
 });
@@ -34,8 +34,9 @@ for (let i = 0; i < navigator.hardwareConcurrency - 3; i++) {
   );
 }
 export default async function (canvas: HTMLCanvasElement) {
-  let antialias = false;
-  const engine = new Engine(canvas, antialias);
+  const engine = new Engine(canvas, true, {
+    doNotHandleContextLost: true,
+  });
   engine.doNotHandleContextLost = true;
   engine.enableOfflineSupport = false;
 
@@ -47,9 +48,13 @@ export default async function (canvas: HTMLCanvasElement) {
   canvas.addEventListener("click", () => {
     canvas.requestPointerLock();
   });
-  const scene = new Scene(engine);
-
+  const scene = new Scene(engine, {
+    useGeometryUniqueIdsMap: true,
+  });
+  scene.skipPointerMovePicking = true;
   scene.collisionsEnabled = false;
+  scene.autoClear = false;
+  scene.autoClearDepthAndStencil = false;
 
   const renderer = await InitDVErenderer({
     textureTypes: [],
@@ -69,6 +74,7 @@ export default async function (canvas: HTMLCanvasElement) {
   await CreateDisplayIndex(voxelData);
 
   const skybox = CreateSphere("skyBox", { diameter: 400.0 }, scene);
+  skybox.isPickable = false;
   skybox.infiniteDistance = true;
   const skyboxMat = renderer.materials.get("dve_skybox");
   if (skyboxMat) {
@@ -91,7 +97,9 @@ export default async function (canvas: HTMLCanvasElement) {
     scene,
     engine,
   });
-
+  RendererContext.set(graph.root, null, null, {
+    dve: DVER,
+  });
   const game = GameComponent.set(graph.root);
 
   const player = await CreatePlayer(DVER, graph);

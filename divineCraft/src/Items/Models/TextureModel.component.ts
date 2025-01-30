@@ -20,7 +20,7 @@ export const TextureModelComponent = NCS.registerComponent({
     mesh: Mesh;
   }>(),
   init(component) {
-    const tranform = TransformComponent.getRequired(component.node);
+/*     const tranform = TransformComponent.getRequired(component.node);
     const tranformNode = TransformNodeComponent.getRequired(component.node);
 
     const { scene } = BabylonContext.getRequired(component.node).data;
@@ -64,7 +64,7 @@ export const TextureModelComponent = NCS.registerComponent({
       { useRightHandedSystem: false }
     );
 
-    component.data.mesh.setVerticesData(VertexBuffer.NormalKind, normals);
+    component.data.mesh.setVerticesData(VertexBuffer.NormalKind, normals); */
   },
   dispose: (component) => component.data.mesh.dispose(),
 });

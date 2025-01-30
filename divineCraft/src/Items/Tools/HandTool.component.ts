@@ -7,6 +7,10 @@ import {
   PlayerInventoryComponent,
 } from "Player/Components/index";
 import { VoxelItemComponent } from "../Item/VoxelItem.component";
+import { RendererContext } from "@dvegames/vlox/Core/Contexts/Renderer.context";
+import { TaskTool } from "@divinevoxel/vlox/Tools/Tasks/TasksTool";
+import { AdvancedBrush } from "@divinevoxel/vlox/Tools/Brush/AdvancedBrushTool";
+
 export const HandToolComponent = NCS.registerComponent({
   type: "hand-tool",
   schema: NCS.schema({
@@ -16,30 +20,39 @@ export const HandToolComponent = NCS.registerComponent({
   data: NCS.data<() => void>(),
   init(component) {
     component = component.cloneCursor();
+    const { dve } = RendererContext.getRequired(component.node).data;
+    const brush = new AdvancedBrush(new TaskTool(dve.threads.construcotrs));
     const useListener = (event: UseItemEvent) => {
-      console.log("USE THE HAND TOOL");
       const inventory = PlayerInventoryComponent.getRequired(event.origin);
-      const item =
-        event.actionButton == "primary"
-          ? inventory.data.getItem()
-          : inventory.data.getOffHandItem();
+      const controls = PlayerControlsComponent.getRequired(event.origin);
+      const item = inventory.data.getItem();
+      if (event.actionButton == "secondary") {
+        const { pickedPosition } = controls.data.pick();
+        brush.setXYZ(...pickedPosition).eraseAndAwaitUpdate();
+
+        item.events.dispatch(
+          UseItemEvent.Event,
+          new UseItemEvent(component.node, item, "primary")
+        );
+
+        return true;
+      }
+
       if (!item) {
         inventory.returnCursor();
         return false;
       }
-      const placer = VoxelPlacerComponent.getRequired(event.origin);
 
       if (item) {
         const voxelComp = VoxelItemComponent.get(item);
         if (voxelComp) {
-          const controls = PlayerControlsComponent.getRequired(event.origin);
           const { pickedPosition, pickedNormal } = controls.data.pick();
           const position = Vector3Like.AddArray(pickedPosition, pickedNormal);
 
-          placer.data.placeSingle(
-            position,
-            voxelComp.schema.toJSON().voxelData
-          );
+          brush
+            .setData(voxelComp.schema.toJSON().voxelData)
+            .setXYZ(...position)
+            .paintAndAwaitUpdate();
           item.events.dispatch(
             UseItemEvent.Event,
             new UseItemEvent(component.node, item, event.actionButton)
@@ -49,7 +62,6 @@ export const HandToolComponent = NCS.registerComponent({
         }
       }
 
-      placer.returnCursor();
       inventory.returnCursor();
     };
 
