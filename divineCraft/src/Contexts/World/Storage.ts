@@ -38,8 +38,8 @@ export class WorldStorage implements WorldStorageInterface {
   }
 
   async saveSector(location: LocationData): Promise<void> {
-    WorldRegister.setDimension(location[0]);
     const sector = WorldRegister.sectors.get(
+      location[0],
       location[1],
       location[2],
       location[3]
@@ -66,7 +66,11 @@ export class WorldStorage implements WorldStorageInterface {
   }
   async unloadSector(location: LocationData): Promise<void> {
     await this.saveSector(location);
-    WorldRegister.setDimension(location[0]);
-    WorldRegister.sectors.remove(location[1], location[2], location[3]);
+    WorldRegister.sectors.remove(
+      location[0],
+      location[1],
+      location[2],
+      location[3]
+    );
   }
 }

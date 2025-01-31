@@ -22,6 +22,7 @@ export const VoxelModelComponent = NCS.registerComponent({
 
     const mesh = new Mesh("", scene);
 
+    mesh.alwaysSelectAsActiveMesh = true;
     const model = VoxelModelIndex.getModel(
       component.schema.voxelId,
       component.schema.voxelState

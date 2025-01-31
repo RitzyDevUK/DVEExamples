@@ -8,7 +8,7 @@ import { WormCaves } from "Gen/Register/Caves/WormCaves";
 import { ValleysCarver } from "Gen/Register/Caves/ValleysCarver";
 import { Caves } from "Gen/Register/Biomes/Caves";
 import { Voxels } from "Gen/Register/Biomes/Voxels";
-import { WorldBounds } from "@divinevoxel/vlox/World/WorldBounds";
+import { WorldSpaces } from "@divinevoxel/vlox/World/WorldSpaces";
 
 export type DimensionGeneratorData = {
   id: string;
@@ -285,7 +285,7 @@ export class DimensionGenerator {
       for (let z = chunkZ; z < this.nodes.chunkDepth + chunkZ; z++) {
         const biome = this.getBiome(x, 0, z);
         const height = this.getBlendedHeight(x, 0, z);
-        if (height > WorldBounds.bounds.MaxY - 20) continue;
+        if (height > WorldSpaces.world.bounds.MaxY - 20) continue;
 
         //generate
         for (let y = 0; y <= height; y++) {
