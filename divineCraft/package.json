@@ -14,6 +14,8 @@
     "@divinevoxel/vlox": "latest",
     "@divinevoxel/vlox-babylon": "latest",
     "@dvegames/vlox": "latest",
+    "@dvegames/vlox-tools": "latest",
+    "@amodx/elm": "latest",
     "@amodx/core": "latest",
     "@amodx/ncs": "latest",
     "@amodx/rng": "latest",
