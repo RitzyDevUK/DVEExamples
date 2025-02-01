@@ -28,7 +28,7 @@ export function App() {
         overflow: "hidden",
       }}
     >
-{/*       {game && <WorldMapComponent graph={game.node.graph} />} */}
+    {/*   {game && <WorldMapComponent graph={game.node.graph} />} */}
       {game && <UI gameRoot={game.node} />}
       <canvas
         style={{
