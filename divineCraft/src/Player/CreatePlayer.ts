@@ -22,12 +22,14 @@ import { VoxelPlacerComponent } from "@dvegames/vlox/Core/Components/Voxels/Inte
 import { VoxelRemoverComponent } from "@dvegames/vlox/Core/Components/Voxels/Interaction/VoxelRemover.component";
 import { CrossHairsComponent } from "@dvegames/vlox/Babylon/Components/Interaction/CrossHairs.component";
 import { CameraDirectionComponent } from "@dvegames/vlox/Babylon/Components/Cameras/CameraDirection.component";
+import { DebugCameraComponent } from "./DebugCamera.component";
 export default async function (dver: DivineVoxelEngineRender, graph: Graph) {
   const playerNode = graph
     .addNode(
       Node(
         "Player",
         [
+          DebugCameraComponent(),
           DimensionProviderComponent(),
           TransformComponent(
             {
