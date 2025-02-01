@@ -7,8 +7,8 @@ module.exports = {
   mode: "production",
   output: {
     filename: "bundle.js",
-    path: path.resolve("build"),
-    publicPath: "/",
+    path: path.resolve(__dirname, "build"), // Ensure correct path resolution
+    publicPath: "/", 
   },
   plugins: [
     new HTMLWebpackPlugin({
