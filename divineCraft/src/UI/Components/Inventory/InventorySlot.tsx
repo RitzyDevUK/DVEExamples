@@ -4,8 +4,6 @@ import useInventorySlot from "./useInventorySlot";
 import { useDragNDrop } from "../../Hooks/useDragNDrop";
 import { Item } from "./Item";
 import useInventory from "./useInventory";
-import { NodeId } from "@amodx/ncs/Nodes/NodeId";
-import { SchemaNode } from "@amodx/schemas/Schemas/SchemaNode";
 
 export const InventorySlot: React.FC<{
   node: NodeCursor;
