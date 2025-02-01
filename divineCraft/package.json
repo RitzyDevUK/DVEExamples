@@ -21,7 +21,9 @@
     "@amodx/math": "latest",
     "@amodx/binary": "latest",
     "@amodx/threads": "latest",
-    "@amodx/indexdb": "latest"
+    "@amodx/indexdb": "latest",
+    "@amodx/controls": "latest",
+    "@amodx/schemas": "latest"
   },
   "devDependencies": {}
 }

@@ -21,7 +21,7 @@ export const HandToolComponent = NCS.registerComponent({
   init(component) {
     component = component.cloneCursor();
     const { dve } = RendererContext.getRequired(component.node).data;
-    const brush = new AdvancedBrush(new TaskTool(dve.threads.construcotrs));
+    const brush = new AdvancedBrush(new TaskTool(dve.threads.constructors));
     const useListener = (event: UseItemEvent) => {
       const inventory = PlayerInventoryComponent.getRequired(event.origin);
       const controls = PlayerControlsComponent.getRequired(event.origin);
