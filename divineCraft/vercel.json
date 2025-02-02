@@ -1,8 +1,4 @@
 {
-    "builds": [{ "src": "package.json", "use": "@vercel/static-build" }],
-    "rewrites": [
-        { "source": "/assets/(.*)", "destination": "/assets/$1" }
-    ],
     "headers": [
         {
             "source": "/(.*)",
@@ -11,5 +7,5 @@
                 { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" }
             ]
         }
-    ]
+    ],
 }
