@@ -2,6 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
 module.exports = {
   entry: "./src/index.tsx",
   mode: "production",
@@ -12,7 +14,12 @@ module.exports = {
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: "./src/index.html",
+      template: "./src/index.html"
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "static/assets", to: "public/assets" }
+      ],
     }),
   ],
   resolve: {
