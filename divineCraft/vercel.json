@@ -1,12 +1,11 @@
 {
-    "builds": [
-      { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "build" } }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "/index.html" }
-    ],
-    "redirects": [
-      { "source": "/(.*)", "destination": "/", "statusCode": 200 }
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+                { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" }
+            ]
+        }
     ]
-  }
-  
+}
