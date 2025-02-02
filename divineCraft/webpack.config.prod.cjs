@@ -20,7 +20,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "public/assets", to: "assets" } // Moves `public/assets/` into `build/assets/`
+        { from: "static/assets", to: "public/assets" }
       ],
     }),
   ],

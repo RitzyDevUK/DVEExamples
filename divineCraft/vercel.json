@@ -1,7 +1,7 @@
 {
-    "public": "public",
-    "routes": [
-      { "src": "/assets/(.*)", "dest": "/assets/$1" }
+    "builds": [{ "src": "package.json", "use": "@vercel/static-build" }],
+    "rewrites": [
+        { "source": "/assets/(.*)", "destination": "/assets/$1" }
     ],
     "headers": [
         {
