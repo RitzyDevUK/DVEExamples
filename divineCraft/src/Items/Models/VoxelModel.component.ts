@@ -47,7 +47,7 @@ export const VoxelModelComponent = NCS.registerComponent({
     mesh.renderingGroupId = 1;
     mesh.material = material;
     component.data = { mesh };
-    console.warn("making mesh", transformNode);
+
     transformNode.data.parent(mesh);
   },
   dispose: (component) => component.data.mesh.dispose(),
