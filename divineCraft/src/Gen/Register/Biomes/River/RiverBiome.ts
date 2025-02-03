@@ -59,10 +59,7 @@ export class RiverBiome extends Biome {
     const topAir =
       topVoxel?.isAir() ||
       (topVoxel?.isRenderable() &&
-        this.nodes.substanceTool
-          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-          .isLiquid()) ||
-      false;
+        dataTool.getVoxel(x, y + 1, z)!.getSubstanceData()["dve_is_liquid"]);
     const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
       brush
@@ -100,10 +97,7 @@ export class RiverBiome extends Biome {
     const topAir =
       topVoxel?.isAir() ||
       (topVoxel?.isRenderable() &&
-        this.nodes.substanceTool
-          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-          .isLiquid()) ||
-      false;
+        dataTool.getVoxel(x, y + 1, z)!.getSubstanceData()["dve_is_liquid"]);
     const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (
       topAir &&

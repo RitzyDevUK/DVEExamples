@@ -14,7 +14,6 @@ import { Vec3Array } from "@amodx/math";
 import { Trees } from "./Register/Biomes/Tree";
 import { Coral } from "./Register/Biomes/Coral";
 import { Caves } from "./Register/Biomes/Caves";
-import { SubstanceDataTool } from "@divinevoxel/vlox/Tools/Data/SubstanceDataTool";
 
 const brush = new WorldGenBrush();
 let clearTimer: any;
@@ -44,7 +43,7 @@ export class WorldGen implements WorldGenInterface {
       worldDetailNoise: 4938274938274,
       worldGenDetailNoise: 1029381029381,
     });
-    this.nodes.init({ noise, brush, substanceTool: new SubstanceDataTool() });
+    this.nodes.init({ noise, brush, });
     this.overWorldGen = new DimensionGenerator(this.nodes, OverWorldGenData);
     this.overWorldGen.init();
     Trees.init(this.nodes);

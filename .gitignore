@@ -6,3 +6,4 @@ meta.json
 *.env
 emsdk
 packages.txt
+divineCraft/build

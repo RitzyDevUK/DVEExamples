@@ -9,6 +9,9 @@ export function App() {
   const [game, setGraph] = useState<(typeof GameComponent)["default"] | null>(
     null
   );
+  const [mapEnabled, setMapEnabled] = useState(
+    new URL(location.href).searchParams.get("gen-map")
+  );
 
   useEffect(() => {
     (async () => {
@@ -28,7 +31,7 @@ export function App() {
         overflow: "hidden",
       }}
     >
-    {/*   {game && <WorldMapComponent graph={game.node.graph} />} */}
+      {game && mapEnabled && <WorldMapComponent graph={game.node.graph} />}
       {game && <UI gameRoot={game.node} />}
       <canvas
         style={{

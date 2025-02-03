@@ -56,11 +56,17 @@ export const textureData: TextureData[] = [
     type: "dve_voxel",
     id: "dc_oak_log",
     frames: 0,
+    variations: {
+      top: { frames: 0 },
+    },
   },
   {
     type: "dve_voxel",
     id: "dc_spruce_log",
     frames: 0,
+    variations: {
+      top: { frames: 0 },
+    },
   },
   {
     type: "dve_voxel",
@@ -449,6 +455,9 @@ export const textureData: TextureData[] = [
     type: "dve_voxel",
     id: "dc_dark_oak_log",
     frames: 0,
+    variations: {
+      top: { frames: 0 },
+    },
   },
   {
     type: "dve_voxel",
@@ -465,6 +474,9 @@ export const textureData: TextureData[] = [
     type: "dve_voxel",
     id: "dc_acacia_log",
     frames: 0,
+    variations: {
+      top: { frames: 0 },
+    },
   },
   {
     type: "dve_voxel",
@@ -481,6 +493,9 @@ export const textureData: TextureData[] = [
     type: "dve_voxel",
     id: "dc_birch_log",
     frames: 0,
+    variations: {
+      top: { frames: 0 },
+    },
   },
   {
     type: "dve_voxel",

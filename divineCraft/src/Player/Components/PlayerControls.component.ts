@@ -43,14 +43,14 @@ class Data {
 
     const intersection = VoxelInersectionComponent.get(this.component.node)!;
 
-    intersection.data.pick(
+    const found = intersection.data.pick(
       [camPos.x, camPos.y, camPos.z],
       [camDir.x, camDir.y, camDir.z],
       15
     );
     cam.returnCursor();
     dir.returnCursor();
-    return intersection.data;
+    return found ? intersection.data : null;
   }
 }
 

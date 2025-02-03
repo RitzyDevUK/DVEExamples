@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx webpack  serve --mode development --env development  --config webpack.config.dev.cjs  "
+    "start": "npx webpack  serve --mode development --env development  --config webpack.config.dev.cjs  ",
+    "build": "npx webpack --config webpack.config.prod.cjs  ",
+    "link-assets":"rm -r ./build/assets; cp -r ./static/assets ./build/assets"
   },
   "author": "",
   "license": "ISC",

@@ -27,8 +27,12 @@ export const HandToolComponent = NCS.registerComponent({
       const controls = PlayerControlsComponent.getRequired(event.origin);
       const item = inventory.data.getItem();
       if (event.actionButton == "secondary") {
-        const { pickedPosition } = controls.data.pick();
-        brush.setXYZ(...pickedPosition).eraseAndAwaitUpdate();
+        const picked = controls.data.pick();
+        if (!picked) {
+          controls.returnCursor();
+          return;
+        }
+        brush.setXYZ(...picked.pickedPosition).eraseAndAwaitUpdate();
 
         item.events.dispatch(
           UseItemEvent.Event,
@@ -46,13 +50,21 @@ export const HandToolComponent = NCS.registerComponent({
       if (item) {
         const voxelComp = VoxelItemComponent.get(item);
         if (voxelComp) {
-          const { pickedPosition, pickedNormal } = controls.data.pick();
-          const position = Vector3Like.AddArray(pickedPosition, pickedNormal);
+          const result = controls.data.pick();
+          if (!result) {
+            voxelComp.returnCursor();
+            return;
+          }
+
+          const position = Vector3Like.AddArray(
+            result.pickedPosition,
+            result.pickedNormal
+          );
 
           brush
-            .setData(voxelComp.schema.toJSON().voxelData)
+            .setData(voxelComp.schema.voxelData)
             .setXYZ(...position)
-            .paintAndAwaitUpdate();
+            .paintAndUpdate();
           item.events.dispatch(
             UseItemEvent.Event,
             new UseItemEvent(component.node, item, event.actionButton)

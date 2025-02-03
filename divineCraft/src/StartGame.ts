@@ -63,7 +63,11 @@ export default async function (canvas: HTMLCanvasElement) {
     textureData,
   });
 
+  const cpuBound = new URL(location.href).searchParams.get("cpu-bound");
   const DVER = await StartRenderer({
+    rendererSettings: {
+      cpuBound: cpuBound ? true : false,
+    },
     voxels: voxelData,
     renderer,
     worldWorker,

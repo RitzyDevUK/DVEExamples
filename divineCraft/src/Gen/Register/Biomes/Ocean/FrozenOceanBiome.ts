@@ -55,9 +55,7 @@ export class FrozenOceanBiome extends Biome {
     const topAir =
       topVoxel?.isAir() ||
       (topVoxel?.isRenderable() &&
-        this.nodes.substanceTool
-          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-          .isLiquid()) ||
+        dataTool.getVoxel(x, y + 1, z)!.getSubstanceData()["dve_is_liquid"]) ||
       false;
     const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
@@ -100,9 +98,7 @@ export class FrozenOceanBiome extends Biome {
     const topAir =
       topVoxel?.isAir() ||
       (topVoxel?.isRenderable() &&
-        this.nodes.substanceTool
-          .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-          .isLiquid()) ||
+      dataTool.getVoxel(x, y + 1, z)!.getSubstanceData()["dve_is_liquid"])  ||
       false;
     const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && (voxel == Voxels.Dirt || voxel == Voxels.Sand)) {

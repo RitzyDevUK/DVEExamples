@@ -22,8 +22,9 @@ export const HammerToolComponent = NCS.registerComponent({
     const brush = new AdvancedBrush(new TaskTool(dve.threads.constructors));
     const useListener = (event: UseItemEvent) => {
       const controls = PlayerControlsComponent.getRequired(event.origin);
-      const { pickedPosition } = controls.data.pick();
-      brush.setXYZ(...pickedPosition).eraseAndAwaitUpdate();
+      const picked = controls.data.pick();
+      if(!picked){controls.returnCursor(); return;}
+      brush.setXYZ(...picked.pickedPosition).eraseAndAwaitUpdate();
     };
 
     component.node.events.addListener(ItemEvents.Use, useListener);

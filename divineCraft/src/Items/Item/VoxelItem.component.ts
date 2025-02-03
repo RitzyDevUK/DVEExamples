@@ -16,6 +16,7 @@ export const VoxelItemComponent = NCS.registerComponent({
   }),
   data: NCS.data<() => void>(),
   init(component) {
+    component = component.cloneCursor();
     const listener = (event: EquipItemEvent) => {
       event.origin.graph.addNode(
         Node({}, [

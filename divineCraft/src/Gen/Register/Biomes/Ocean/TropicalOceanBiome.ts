@@ -53,10 +53,10 @@ export class TropicalOceanBiome extends Biome {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topVoxel = dataTool.getVoxel(x, y + 1, z);
-    const topAir = topVoxel?.isAir() || topVoxel?.isRenderable() &&
-    this.nodes.substanceTool
-      .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-      .isLiquid() || false;
+    const topAir =
+      topVoxel?.isAir() ||
+      (topVoxel?.isRenderable() &&
+        dataTool.getVoxel(x, y + 1, z)!.getSubstanceData()["dve_is_liquid"]);
     const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && voxel == Voxels.Stone!) {
       brush.setData(VoxelData[Voxels.Dirt]).setXYZ(x, y, z).paint();
@@ -87,10 +87,10 @@ export class TropicalOceanBiome extends Biome {
     const brush = this.nodes.brush;
     const dataTool = brush.dataCursor;
     const topVoxel = dataTool.getVoxel(x, y + 1, z);
-    const topAir = topVoxel?.isAir() || topVoxel?.isRenderable() &&
-    this.nodes.substanceTool
-      .setSubstance(dataTool.getVoxel(x, y + 1, z)!.getSubstance())
-      .isLiquid() || false;
+    const topAir =
+      topVoxel?.isAir() ||
+      (topVoxel?.isRenderable() &&
+        dataTool.getVoxel(x, y + 1, z)!.getSubstanceData()["dve_is_liquid"]);
     const voxel = dataTool.getVoxel(x, y, z)?.getStringId();
     if (topAir && (voxel == Voxels.Dirt || voxel == Voxels.Sand)) {
       const value = Math.random();

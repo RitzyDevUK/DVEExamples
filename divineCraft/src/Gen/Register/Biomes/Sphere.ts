@@ -11,9 +11,9 @@ export function GenerateSphere(
   skipFactor = -1,
   noDestroy = true
 ) {
-  let rx = sx - radius;
-  let ry = sy - radius;
-  let rz = sz - radius;
+  let rx = Math.floor(sx - radius);
+  let ry = Math.floor(sy - radius);
+  let rz = Math.floor(sz - radius);
 
   brush.setId(voxel);
 
@@ -23,6 +23,7 @@ export function GenerateSphere(
     for (let iz = rz; iz <= sz + radius; iz++) {
       for (let iy = ry; iy <= sy + radius; iy++) {
         if (skipFactor > -1 && Math.random() < skipFactor) continue;
+
         const v = dataTool.getVoxel(ix, iy, iz);
         if (noDestroy && v) {
           if (v.isAir() && v.getLevelState() == 1) continue;

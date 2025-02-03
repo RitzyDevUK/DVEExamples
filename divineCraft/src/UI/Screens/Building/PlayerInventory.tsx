@@ -98,7 +98,7 @@ export function PlayerInventory() {
     <>
       <PlayerItemLookUp />
       <div className="player-inventory">
-        <OffHandInventory />
+       
         <MainInventory />
       
       </div>
