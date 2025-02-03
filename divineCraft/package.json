@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx webpack  serve --mode development --env development  --config webpack.config.dev.cjs  ",
-    "build": "npx webpack --config webpack.config.prod.cjs  ",
+    "build": "npx webpack --config webpack.config.prod.cjs && yarn link-assets",
     "link-assets":"rm -r ./build/assets; cp -r ./static/assets ./build/assets"
   },
   "author": "",
@@ -27,7 +27,31 @@
     "@amodx/threads": "latest",
     "@amodx/indexdb": "latest",
     "@amodx/controls": "latest",
-    "@amodx/schemas": "latest"
+    "@amodx/schemas": "latest",
+    "@babylonjs/core": "^7.34.2",
+    "dat.gui": "^0.7.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.7.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/dat.gui": "^0.7.13",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@webgpu/types": "^0.1.51",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "file-loader": "^6.2.0",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "postcss-loader": "^8.1.1",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "tsconfig-paths-webpack-plugin": "^4.2.0",
+    "vercel": "^40.1.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.1.0"
+  }
 }
